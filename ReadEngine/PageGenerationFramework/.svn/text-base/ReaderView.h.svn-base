@@ -1,0 +1,66 @@
+//
+//  ReaderView.h
+//  创新版
+//
+//  Created by XuPeng on 16/5/21.
+//  Copyright © 2016年 cxb. All rights reserved.
+//  绘制阅读页面
+
+#import <UIKit/UIKit.h>
+
+@class ReaderView;
+
+@protocol ReaderViewDelegate <NSObject>
+
+/**
+ *  添加笔记
+ *
+ *  @param readerView      当前View
+ *  @param notesContentDic 笔记内容数组
+ */
+- (void)readerViewAddNotes:(ReaderView *)readerView notesContentDic:(NSMutableDictionary *)notesContentDic;
+/**
+ *  删除笔记
+ *
+ *  @param readerView      当前View
+ *  @param notesContentDic 笔记内容数组
+ */
+- (void)readerViewDeleteNotes:(ReaderView *)readerView notesContentDic:(NSMutableDictionary *)notesContentDic;
+/**
+ *  启动编辑模式
+ *
+ *  @param readerView 当前View
+ */
+- (void)readerViewStartEditMode:(ReaderView *)readerView;
+/**
+ *  关闭编辑模式
+ *
+ *  @param readerView 当前View
+ */
+- (void)readerViewCloseEditMode:(ReaderView *)readerView;
+
+@end
+
+@interface ReaderView : UIView<UIGestureRecognizerDelegate>
+
+@property (nonatomic, assign) id<ReaderViewDelegate>delegate;
+@property (nonatomic, strong) NSMutableArray *bottomLineArr;
+/**
+ *  绘制阅读页面
+ *
+ *  @param fontSize   字体大小
+ *  @param pageRect   页面位置
+ *  @param fontColor  字体颜色
+ *  @param txtContent 绘制内容
+ *
+ *  @return 绘制后的View
+ */
+- (instancetype)initWithFontSize:(CGFloat)fontSize pageRect:(CGRect)pageRect fontColor:(UIColor *)fontColor txtContent:(NSString *)txtContent backgroundColorImage:(UIImage *)backgroundColorImage isNight:(BOOL)isNight;
+
+// 开启/关闭笔记功能
+- (void)openOrClosedNotesFunction:(BOOL)notesState;
+
+// 绘制标题
+- (void)drawTitle:(NSString *)titleStr;
+
+@end

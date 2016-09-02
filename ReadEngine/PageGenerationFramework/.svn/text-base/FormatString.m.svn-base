@@ -1,0 +1,76 @@
+//
+//  FormatString.m
+//  创新版
+//
+//  Created by XuPeng on 16/5/21.
+//  Copyright © 2016年 cxb. All rights reserved.
+//
+
+#import "FormatString.h"
+
+#define kStringMaxLength  1024
+
+@implementation FormatString
+
++ (NSString *)formatString:(NSString *)string {
+    return [self processingChapterContent:string];
+}
+
+#pragma mark - 处理字符串内容
++ (NSString *)processingChapterContent:(NSString *)chapterStr {
+    NSString *chapterContent = [[NSString alloc] init];
+    NSInteger stringPointer  = 0;
+    
+    while (YES) {
+        NSRange range;
+        if (stringPointer + kStringMaxLength > chapterStr.length) {
+            NSString *str = [chapterStr substringFromIndex:stringPointer];
+            str           = [self stringProcessing:str];
+            // 去掉最后的空格和回车
+            while (YES) {
+                if (str.length >= 3) {
+                    range.length   = 3;
+                    range.location = str.length - 3;
+                    NSString *ch   = [str substringWithRange:range];
+                    if ([@"\n　　" isEqualToString:ch]) {
+                        str = [str substringToIndex:range.location];
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+            chapterContent = [chapterContent stringByAppendingString:str];
+            break;
+        } else {
+            range.location = stringPointer;
+            range.length   = kStringMaxLength;
+            NSString *str  = [chapterStr substringWithRange:range];
+            chapterContent = [chapterContent stringByAppendingString:[self stringProcessing:str]];
+            stringPointer  += kStringMaxLength;
+        }
+    }
+    // 文章开头插入两个空格
+    chapterContent = [NSString stringWithFormat:@"\n\n　　%@",chapterContent];
+    
+    return chapterContent;
+}
+#pragma mark - 格式化章节内容片段
++ (NSString *)stringProcessing:(NSString *)str {
+    
+    // 去掉 空格
+    str = [str stringByReplacingOccurrencesOfString:@"　" withString:@""];
+    str = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
+    // 去掉空行
+    str = [str stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
+    // 去掉\r
+    str = [str stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    // 去掉空行
+    str = [str stringByReplacingOccurrencesOfString:@"\n\n" withString:@"\n"];
+    // 首行缩进
+    str = [str stringByReplacingOccurrencesOfString:@"\n" withString:@"\n　　"];
+    return str;
+}
+
+@end
