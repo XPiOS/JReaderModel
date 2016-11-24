@@ -49,7 +49,7 @@
 
 @interface NotesMenuView : UIView<UIGestureRecognizerDelegate>
 
-@property (nonatomic, assign) id<NotesMenuViewDelegate> delegate;
+@property (nonatomic, weak) id<NotesMenuViewDelegate> delegate;
 @property (nonatomic, strong) NSMutableDictionary *notesContentDic; // 菜单页保存的笔记数组
 
 + (NotesMenuView *)shareNotesMenuView:(CGPoint)point isUp:(BOOL)isUp;

@@ -52,6 +52,7 @@
 - (void)tapGestureRecognizerClick {
     _tapView                                     = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainViewWidth, kMainViewHeight)];
     _tapView.backgroundColor                     = [UIColor clearColor];
+    // 添加点击手势，点击后收起笔记详情
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizerClick:)];
     tapGestureRecognizer.delegate                = self;
     [_tapView addGestureRecognizer:tapGestureRecognizer];
@@ -61,13 +62,16 @@
     UIImageView *imageView;
     if (_isNight) {
         _showView.backgroundColor = [UIColor colorWithRed:34 / 255.0 green:34 / 255.0 blue:34 / 255.0 alpha:1.0f];
+        // 设置三角
         image                     = [UIImage imageNamed:@"阅读器-笔记框夜间三角形"];
     } else {
         _showView.backgroundColor = [UIColor colorWithRed:250 / 255.0 green:236 / 255.0 blue:185 / 255.0 alpha:1.0f];
+        // 设置三角
         image                     = [UIImage imageNamed:@"阅读器-笔记框三角形"];
     }
     imageView                       = [[UIImageView alloc] initWithImage:image];
     [_showView addSubview:imageView];
+    // 设置内容
     UITextView *showTextView        = [[UITextView alloc] init];
     showTextView.frame              = CGRectMake(0, 10, kShowViewWidth, 0);
     showTextView.layer.cornerRadius = 10;
@@ -79,42 +83,55 @@
         showTextView.backgroundColor = [UIColor colorWithRed:250 / 255.0 green:236 / 255.0 blue:185 / 255.0 alpha:1.0f];
         textColor                    = [UIColor blackColor];
     }
+
     showTextView.delegate                   = self;
     showTextView.textColor                  = [UIColor redColor];
+
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineSpacing              = 10;
+    paragraphStyle.lineSpacing              = 10;// 字体的行间距
     NSDictionary *attributes                = @{
                                                      NSFontAttributeName:[UIFont systemFontOfSize:14],
                                                      NSParagraphStyleAttributeName:paragraphStyle, NSForegroundColorAttributeName :textColor
                                                      };
     showTextView.attributedText             = [[NSAttributedString alloc] initWithString:_noteContent attributes:attributes];
-    showTextView.textContainerInset         = UIEdgeInsetsMake(0, 10, 0, 0);
+    showTextView.textContainerInset         = UIEdgeInsetsMake(0, 10, 0, 0);//设置页边距
     [_showView addSubview:showTextView];
-    _showView.layer.shadowColor             = [UIColor blackColor].CGColor;
-    _showView.layer.shadowOffset            = CGSizeMake(4,4);
-    _showView.layer.shadowOpacity           = 0.6;
-    _showView.layer.shadowRadius            = 4;
-    _showView.layer.cornerRadius            = 10;
-    CGRect textFrame                        = [[showTextView layoutManager]usedRectForTextContainer:[showTextView textContainer]];
-    CGFloat showTextViewHeight              = textFrame.size.height + 20;
+
+    // 设置阴影
+    _showView.layer.shadowColor     = [UIColor blackColor].CGColor;//shadowColor阴影颜色
+    _showView.layer.shadowOffset    = CGSizeMake(4,4);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+    _showView.layer.shadowOpacity   = 0.6;//阴影透明度，默认0
+    _showView.layer.shadowRadius    = 4;//阴影半径，默认3
+    _showView.layer.cornerRadius    = 10;
+    
+    CGRect textFrame = [[showTextView layoutManager]usedRectForTextContainer:[showTextView textContainer]];
+    CGFloat showTextViewHeight = textFrame.size.height + 20;
     if (showTextViewHeight >= kShowViewHeight) {
         showTextViewHeight = kShowViewHeight;
     }
-    showTextView.frame = CGRectMake(0, 10, kShowViewWidth, showTextViewHeight - 20);
+    showTextView.frame              = CGRectMake(0, 10, kShowViewWidth, showTextViewHeight - 20);
+    
+    // 根据button位置，笔记详情View有两种布局
     if (kShowViewY1 + showTextViewHeight + 44 <= kMainViewHeight) {
-        _showView.frame     = CGRectMake(kShowViewX, kShowViewY1, kShowViewWidth, showTextViewHeight);
+        // 放到屏幕下方  三角向上
+        _showView.frame = CGRectMake(kShowViewX, kShowViewY1, kShowViewWidth, showTextViewHeight);
+        // 旋转180度
         imageView.transform = CGAffineTransformRotate(imageView.transform, M_PI);
-        imageView.frame     = CGRectMake(kShowViewWidth / 2 - image.size.width / 2, 1 - image.size.height, image.size.width, image.size.height);
+        imageView.frame = CGRectMake(kShowViewWidth / 2 - image.size.width / 2, 1 - image.size.height, image.size.width, image.size.height);
     } else if (kShowViewY2 > 0) {
-        _showView.frame     = CGRectMake(kShowViewX, kShowViewY2, kShowViewWidth, showTextViewHeight);
-        imageView.frame     = CGRectMake(kShowViewWidth / 2 - image.size.width / 2, showTextViewHeight, image.size.width, image.size.height);
+        // 放屏幕上方 三角向下
+        _showView.frame = CGRectMake(kShowViewX, kShowViewY2, kShowViewWidth, showTextViewHeight);
+        imageView.frame = CGRectMake(kShowViewWidth / 2 - image.size.width / 2, showTextViewHeight, image.size.width, image.size.height);
     } else {
-        _showView.frame     = CGRectMake(kShowViewX, kShowViewY3, kShowViewWidth, showTextViewHeight);
-        imageView.frame     = CGRectMake(kShowViewWidth / 2 - image.size.width / 2, showTextViewHeight, image.size.width, image.size.height);
+        // 放屏幕中间
+        _showView.frame = CGRectMake(kShowViewX, kShowViewY3, kShowViewWidth, showTextViewHeight);
+        imageView.frame = CGRectMake(kShowViewWidth / 2 - image.size.width / 2, showTextViewHeight, image.size.width, image.size.height);
     }
+
     [_tapView addSubview:_showView];
 }
 - (void)tapGestureRecognizerClick:(UITapGestureRecognizer *)tapGesture {
+    NSLog(@"收起笔记详情");
     [UIView animateWithDuration:0.5f animations:^{
         _showView.alpha = 0;
     } completion:^(BOOL finished) {
@@ -124,18 +141,23 @@
         _tapView        = nil;
     }];
 }
+
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
-    UIImage *image                = [UIImage imageNamed:@"笔记标志三点"];
-    UIImageView *imageView        = [[UIImageView alloc] initWithImage:image];
-    imageView.frame               = CGRectMake(0, 0, 14, 14);
-    UIView *buttonView            = [[UIView alloc] init];
-    buttonView.backgroundColor    = _color;
-    buttonView.frame              = imageView.frame;
-    buttonView.layer.cornerRadius = 7;
-    [buttonView addSubview:imageView];
-    [self addSubview:buttonView];
+        // 添加图标
+        UIImage *image                = [UIImage imageNamed:@"笔记标志三点"];
+        UIImageView *imageView        = [[UIImageView alloc] initWithImage:image];
+        imageView.frame               = CGRectMake(0, 0, 14, 14);
+        UIView *buttonView            = [[UIView alloc] init];
+        buttonView.backgroundColor    = _color;
+        buttonView.frame              = imageView.frame;
+        buttonView.layer.cornerRadius = 7;
+        
+        [buttonView addSubview:imageView];
+        [self addSubview:buttonView];
 }
+
+#pragma mark - 手势代理
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     CGPoint point = [touch locationInView:_tapView];
     CGRect rect   = _showView.frame;
@@ -144,6 +166,7 @@
     }
     return YES;
 }
+#pragma mark - 重载，防止长按
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     return NO;
 }

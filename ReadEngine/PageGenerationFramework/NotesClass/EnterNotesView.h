@@ -24,7 +24,7 @@
 
 @interface EnterNotesView : UIView<UITextViewDelegate>
 
-@property (nonatomic, assign) id<EnterNotesViewDelegate>delegate;
+@property (nonatomic, weak) id<EnterNotesViewDelegate>delegate;
 @property (nonatomic, copy  ) NSString *color; // 输入笔记页面保存的下划线颜色
 @property (nonatomic, strong) NSString *selectedContentStr;
 @property (nonatomic, strong) NSString *noteContentStr;

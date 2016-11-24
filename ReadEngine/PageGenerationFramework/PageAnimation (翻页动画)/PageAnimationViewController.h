@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, AnimationTypes) {
     TheNoAnimationEffectOfPage = 3 // 没有动画
 };
 
-@property (nonatomic, assign) id<PageAnimationViewControllerDelegate>delegate;
+@property (nonatomic, weak) id<PageAnimationViewControllerDelegate>delegate;
 
 - (instancetype)initWithViewController:(UIViewController *)viewController className:(__unsafe_unretained Class)className backgroundImage:(UIImage *)backgroundImage;
 

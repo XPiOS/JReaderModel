@@ -12,6 +12,7 @@
 
 @class PageGenerationManager;
 
+// 数据源标记
 typedef enum {
     PreviousContent = -1,// 前一章
     CurrentContent  = 0, // 当前章
@@ -96,8 +97,8 @@ typedef enum {
 @interface PageGenerationManager : UIViewController
 
 // 代理
-@property (nonatomic, assign) id<PageGenerationManagerDataSource>dataSource;
-@property (nonatomic, assign) id<PageGenerationManagerDelegate>detegale;
+@property (nonatomic, weak) id<PageGenerationManagerDataSource>dataSource;
+@property (nonatomic, weak) id<PageGenerationManagerDelegate>delegate;
 
 // 属性
 @property (nonatomic, assign) CGFloat               fontSize;// 字体大小

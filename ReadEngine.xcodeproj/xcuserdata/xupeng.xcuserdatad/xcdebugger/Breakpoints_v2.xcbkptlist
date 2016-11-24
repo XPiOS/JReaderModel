@@ -58,13 +58,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ReadEngine/PageGenerationFramework/ReaderView/ReaderView.m"
-            timestampString = "494497614.263968"
+            timestampString = "501651798.095937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
-            landmarkName = "-dealloc"
-            landmarkType = "5">
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "@implementation ReaderView"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

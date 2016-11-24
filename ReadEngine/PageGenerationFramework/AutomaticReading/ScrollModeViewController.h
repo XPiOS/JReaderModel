@@ -29,7 +29,7 @@
 
 @interface ScrollModeViewController : UIViewController
 
-@property (nonatomic, assign) id<ScrollModeViewControllerDelegate>delegate;
+@property (nonatomic, weak) id<ScrollModeViewControllerDelegate>delegate;
 
 /**
  *  创建滚动自动阅读

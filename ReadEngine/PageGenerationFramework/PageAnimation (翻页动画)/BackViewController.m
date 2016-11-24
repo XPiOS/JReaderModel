@@ -16,6 +16,7 @@
     CGFloat      _alpha;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
@@ -25,11 +26,13 @@
 }
 
 - (void)setAlpha:(CGFloat)alpha {
-    _alpha = alpha;
+    _alpha                      = alpha;
 }
 
 - (UIImageView *)captureView:(UIView *)view {
     CGSize size                 = view.bounds.size;
+    
+    // 翻转
     CGAffineTransform transform = CGAffineTransformMake(-1,0,0,1,size.width,0);
     UIGraphicsBeginImageContextWithOptions(size, view.opaque, 0.0f);
     CGContextRef context        = UIGraphicsGetCurrentContext();

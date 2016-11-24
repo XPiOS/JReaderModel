@@ -42,7 +42,7 @@ typedef NS_ENUM(NSInteger, AutomaticReadingTypes) {
     ScrollMode     = 2 // 滚动模式
 };
 
-@property (nonatomic, assign) id<AutomaticReadingViewControllerDelegate>delegate;
+@property (nonatomic, weak) id<AutomaticReadingViewControllerDelegate>delegate;
 
 @property (nonatomic, retain) UIViewController      *currentViewController;// 当前展示视图控制器
 @property (nonatomic, retain) UIViewController      *nextViewController;// 下一个展示视图控制器

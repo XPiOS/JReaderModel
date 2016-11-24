@@ -29,7 +29,7 @@
 
 @interface CoverPatternsViewController : UIViewController
 
-@property (nonatomic, assign) id<CoverPatternsViewControllerDelegate>delegate;
+@property (nonatomic, weak) id<CoverPatternsViewControllerDelegate>delegate;
 
 /**
  *  创建覆盖自动阅读

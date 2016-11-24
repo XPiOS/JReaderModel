@@ -60,7 +60,7 @@
 
 @interface AnimationViewController : UIViewController <UIGestureRecognizerDelegate>
 
-@property (nonatomic, assign) id<AnimationViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<AnimationViewControllerDelegate> delegate;
 
 // 当前页
 @property (nonatomic, retain) UIViewController *currentViewController;

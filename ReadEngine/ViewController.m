@@ -52,7 +52,7 @@
     // 创建阅读引擎
     _pageGenerationManager                    = [PageGenerationManager sharePageGenerationManager];
     _pageGenerationManager.dataSource         = self;
-    _pageGenerationManager.detegale           = self;
+    _pageGenerationManager.delegate = self;
 //    // 设置字体大小
 //    _pageGenerationManager.fontSize           = 15;
 //    // 设置页面位置

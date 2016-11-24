@@ -31,10 +31,10 @@
 #define kFontColor                    [UIColor colorWithRed:153 / 255.0f green:153 / 255.0 blue:153 / 255.0 alpha:1.0f]
 
 @implementation PageGenerationFooter {
-    UILabel     *_chapterNameLabel;
-    UILabel     *_progressLabel;
-    UIImageView *_batteryView;
-    UIView      *_batteryFill;
+    UILabel     *_chapterNameLabel; // 章节名称
+    UILabel     *_progressLabel;    // 阅读进度
+    UIImageView *_batteryView;      // 电池信息
+    UIView      *_batteryFill;      // 电池填充
 }
 
 +(PageGenerationFooter *)sharePageGenerationFooter {
@@ -51,22 +51,31 @@
 }
 - (void)initializeView {
     self.backgroundColor            = [UIColor clearColor];
+
+    // 绘制章节名称
     _chapterNameLabel               = [[UILabel alloc] init];
     _chapterNameLabel.textAlignment = NSTextAlignmentLeft;
     _chapterNameLabel.font          = [UIFont systemFontOfSize:12.0f];
     _chapterNameLabel.textColor     = kFontColor;
     [self addSubview:_chapterNameLabel];
+
+    // 绘制进度
     _progressLabel                  = [[UILabel alloc] init];
     _progressLabel.textAlignment    = NSTextAlignmentRight;
     _progressLabel.font             = [UIFont systemFontOfSize:12.0f];
     _progressLabel.textColor        = kFontColor;
     [self addSubview:_progressLabel];
+
+    // 绘制电池信息
     _batteryView                    = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.batteryImageName]];
+    // 电池电量
     [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
     float electricity               = [[UIDevice currentDevice] batteryLevel];
+    // 绘制0.5的电量  电池的内部宽度定为45
     _batteryFill                    = [[UIView alloc] initWithFrame:CGRectMake(kBatteryFillX, kBatteryFillY, kBatteryFillWidth * electricity, kBatteryFillHeight)];
     _batteryFill.backgroundColor    = kFontColor;
     [_batteryView addSubview:_batteryFill];
+
     [self addSubview:_batteryView];
 }
 
@@ -91,10 +100,12 @@
     _batteryImageName  = batteryImageName;
     _batteryView.image = [UIImage imageNamed:_batteryImageName];
 }
+#pragma mark - 重写父类方法
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     _chapterNameLabel.frame = CGRectMake(kChapterNameLabelX, kChapterNameLabelY, kChapterNameLabelWidth, kChapterNameLabelHeight);
     _progressLabel.frame    = CGRectMake(kProgressLabelX, kProgressLabelY, kProgressLabelWidth, kProgressLabelHeight);
-    _batteryView.frame      = CGRectMake(kBatteryViewX, kBatteryViewY, kBatteryViewWidth, kBatteryViewHeight);    
+    _batteryView.frame      = CGRectMake(kBatteryViewX, kBatteryViewY, kBatteryViewWidth, kBatteryViewHeight);
+    
 }
 @end

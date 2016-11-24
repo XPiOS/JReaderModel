@@ -46,7 +46,7 @@
 
 @interface ReaderViewController : UIViewController
 
-@property (nonatomic, assign) id<ReaderViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<ReaderViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray *notesArr;
 @property (nonatomic, strong) NSString       *titleStr;
 @property (nonatomic, assign) BOOL           isShowMenu;// 是否为显示菜单

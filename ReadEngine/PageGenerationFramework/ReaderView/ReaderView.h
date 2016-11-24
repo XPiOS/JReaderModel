@@ -43,7 +43,7 @@
 
 @interface ReaderView : UIView<UIGestureRecognizerDelegate>
 
-@property (nonatomic, assign) id<ReaderViewDelegate>delegate;
+@property (nonatomic, weak) id<ReaderViewDelegate>delegate;
 @property (nonatomic, strong) NSMutableArray *bottomLineArr;
 @property (nonatomic, assign) CGFloat        lastLinePosition; // 最后一行的位置
 

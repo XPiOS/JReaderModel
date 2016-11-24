@@ -22,11 +22,15 @@
     return self;
 }
 - (void)setTouchPoint:(CGPoint)touchPoint {
+    
     _touchPoint = touchPoint;
     self.center = CGPointMake(touchPoint.x, touchPoint.y - 100);
+    // 调用重绘
     [self setNeedsDisplay];
 }
+
 - (void)drawRect:(CGRect)rect {
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextTranslateCTM(context, self.frame.size.width * 0.5,self.frame.size.height * 0.5);
     CGContextScaleCTM(context, 1.5, 1.5);

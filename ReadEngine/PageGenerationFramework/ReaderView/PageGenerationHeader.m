@@ -33,29 +33,41 @@
     if (self) {
         [self initializeView];
     }
+    
     return self;
 }
 
+#pragma mark - 初始化
 - (void)initializeView {
+    // 设置背景颜色
     self.backgroundColor         = [UIColor clearColor];
+    // 绘制时间信息
     _timeLabel                   = [[UILabel alloc] init];
     _timeLabel.textAlignment     = NSTextAlignmentRight;
     _timeLabel.font              = [UIFont systemFontOfSize:12.0f];
     _timeLabel.text              = [self get_time];
     _timeLabel.textColor         = kFontColor;
     [self addSubview:_timeLabel];
+
+    // 绘制书籍名称
     _bookNameLabel               = [[UILabel alloc] init];
     _bookNameLabel.textAlignment = NSTextAlignmentLeft;
     _bookNameLabel.font          = [UIFont systemFontOfSize:12.0f];
     _bookNameLabel.textColor     = kFontColor;
     [self addSubview:_bookNameLabel];
 }
+
+#pragma mark - 外部方法
+
+#pragma mark - 内部方法
+#pragma mark 获取系统时间
 - (NSString *)get_time {
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"hh:mm"];
     NSString* date             = [formatter stringFromDate:[NSDate date]];
     return date;
 }
+
 #pragma mark - get/set
 - (void)setBookName:(NSString *)bookName {
     _bookName           = bookName;
@@ -67,9 +79,10 @@
     _timeLabel.textColor     = _textColor;
 }
 
+#pragma mark - 重写父类方法
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
-    _timeLabel.frame     = CGRectMake(kTimeLabelX, kTimeLabelY, kTimeLabelWidth, kTimeLabelHeight);
+    _timeLabel.frame = CGRectMake(kTimeLabelX, kTimeLabelY, kTimeLabelWidth, kTimeLabelHeight);
     _bookNameLabel.frame = CGRectMake(kBookNameLabelX, kBookNameLabelY, kBookNameLabelWidth, kBookNameLabelHeight);
 }
 
