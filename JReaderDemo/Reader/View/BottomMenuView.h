@@ -11,5 +11,13 @@
 @interface BottomMenuView : UIView
 
 @property (nonatomic, copy) Parameter1Block buttonClickBlock;
+@property (nonatomic, copy) Parameter1Block sliderClickBlock;
+
+/**
+ 设置当前进度
+
+ @param progress 当前进度值
+ */
+- (void)setProgress:(CGFloat)progress;
 
 @end

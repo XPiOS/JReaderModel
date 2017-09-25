@@ -7,16 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8BC7AF58EFFF8D7E63B296F9 /* libPods-JReaderDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A5848C3F4075D2DD0A78B05 /* libPods-JReaderDemo.a */; };
 		C424DBB61F5D533C0092370C /* JReaderBaseAnimationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C424DBA51F5D533C0092370C /* JReaderBaseAnimationViewController.m */; };
 		C424DBB71F5D533C0092370C /* JReaderAnimationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C424DBA71F5D533C0092370C /* JReaderAnimationViewController.m */; };
 		C424DBB81F5D533C0092370C /* JReaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C424DBA91F5D533C0092370C /* JReaderManager.m */; };
 		C424DBB91F5D533C0092370C /* JReaderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C424DBAB1F5D533C0092370C /* JReaderModel.m */; };
 		C424DBBA1F5D533C0092370C /* JReaderFormatString.m in Sources */ = {isa = PBXBuildFile; fileRef = C424DBAE1F5D533C0092370C /* JReaderFormatString.m */; };
-		C424DBBB1F5D533C0092370C /* JReaderPaging.mm in Sources */ = {isa = PBXBuildFile; fileRef = C424DBB01F5D533C0092370C /* JReaderPaging.mm */; };
+		C424DBBB1F5D533C0092370C /* JReaderPaging.m in Sources */ = {isa = PBXBuildFile; fileRef = C424DBB01F5D533C0092370C /* JReaderPaging.m */; };
 		C424DBBC1F5D533C0092370C /* JReaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C424DBB31F5D533C0092370C /* JReaderView.m */; };
 		C424DBBD1F5D533C0092370C /* JReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C424DBB51F5D533C0092370C /* JReaderViewController.m */; };
 		C429C3771F7130EB0026E639 /* NSObject+JReaderKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = C429C3761F7130EB0026E639 /* NSObject+JReaderKVO.m */; };
 		C43F54821F6A92B3008133DD /* JReaderNoneAnimationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43F54811F6A92B3008133DD /* JReaderNoneAnimationViewController.m */; };
+		C43FEBE91F73C704008E3629 /* ReaderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C43FEBE81F73C704008E3629 /* ReaderModel.m */; };
+		C43FEBEC1F73C73A008E3629 /* ChapterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C43FEBEB1F73C73A008E3629 /* ChapterModel.m */; };
+		C43FEC031F73C84B008E3629 /* 62447 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBEE1F73C84B008E3629 /* 62447 */; };
+		C43FEC041F73C84B008E3629 /* 62448 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBEF1F73C84B008E3629 /* 62448 */; };
+		C43FEC051F73C84B008E3629 /* 62449 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBF01F73C84B008E3629 /* 62449 */; };
+		C43FEC061F73C84B008E3629 /* 62450 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBF11F73C84B008E3629 /* 62450 */; };
+		C43FEC071F73C84B008E3629 /* 62451 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBF21F73C84B008E3629 /* 62451 */; };
+		C43FEC081F73C84B008E3629 /* 62452 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBF31F73C84B008E3629 /* 62452 */; };
+		C43FEC091F73C84B008E3629 /* 62453 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBF41F73C84B008E3629 /* 62453 */; };
+		C43FEC0A1F73C84B008E3629 /* 62454 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBF51F73C84B008E3629 /* 62454 */; };
+		C43FEC0B1F73C84B008E3629 /* 62455 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBF61F73C84B008E3629 /* 62455 */; };
+		C43FEC0C1F73C84B008E3629 /* 62456 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBF71F73C84B008E3629 /* 62456 */; };
+		C43FEC0D1F73C84B008E3629 /* 62457 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBF81F73C84B008E3629 /* 62457 */; };
+		C43FEC0E1F73C84B008E3629 /* 62458 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBF91F73C84B008E3629 /* 62458 */; };
+		C43FEC0F1F73C84B008E3629 /* 62459 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBFA1F73C84B008E3629 /* 62459 */; };
+		C43FEC101F73C84B008E3629 /* 62460 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBFB1F73C84B008E3629 /* 62460 */; };
+		C43FEC111F73C84B008E3629 /* 62461 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBFC1F73C84B008E3629 /* 62461 */; };
+		C43FEC121F73C84B008E3629 /* 62462 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBFD1F73C84B008E3629 /* 62462 */; };
+		C43FEC131F73C84B008E3629 /* 62463 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBFE1F73C84B008E3629 /* 62463 */; };
+		C43FEC141F73C84B008E3629 /* 62464 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEBFF1F73C84B008E3629 /* 62464 */; };
+		C43FEC151F73C84B008E3629 /* 62465 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEC001F73C84B008E3629 /* 62465 */; };
+		C43FEC161F73C84B008E3629 /* 62466 in Resources */ = {isa = PBXBuildFile; fileRef = C43FEC011F73C84B008E3629 /* 62466 */; };
+		C43FEC1D1F73CE3C008E3629 /* ReaderModel in Resources */ = {isa = PBXBuildFile; fileRef = C43FEC1C1F73CE3C008E3629 /* ReaderModel */; };
 		C46F5E6F1F6B7BC700746BAA /* JReaderCoverAnimationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C46F5E6E1F6B7BC700746BAA /* JReaderCoverAnimationViewController.m */; };
 		C46F5E721F6BAFD800746BAA /* JReaderScrollAnimationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C46F5E711F6BAFD800746BAA /* JReaderScrollAnimationViewController.m */; };
 		C46F5E751F6BB44900746BAA /* JReaderCurlAnimationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C46F5E741F6BB44900746BAA /* JReaderCurlAnimationViewController.m */; };
@@ -39,6 +63,7 @@
 		C4BB41A01F5930860052F10C /* WDLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BB419B1F5930860052F10C /* WDLayoutConstraint.m */; };
 		C4BB41A11F5930860052F10C /* WDViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BB419D1F5930860052F10C /* WDViewLayout.m */; };
 		C4BB41AE1F597A620052F10C /* text in Resources */ = {isa = PBXBuildFile; fileRef = C4BB41AD1F597A620052F10C /* text */; };
+		C4CF92C01F78AA2F00AA141C /* SetMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF92BF1F78AA2F00AA141C /* SetMenuView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +84,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7A5848C3F4075D2DD0A78B05 /* libPods-JReaderDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JReaderDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EEA8C484C021C3E53A233CA /* Pods-JReaderDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JReaderDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-JReaderDemo/Pods-JReaderDemo.release.xcconfig"; sourceTree = "<group>"; };
 		C424DBA41F5D533C0092370C /* JReaderBaseAnimationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JReaderBaseAnimationViewController.h; sourceTree = "<group>"; };
 		C424DBA51F5D533C0092370C /* JReaderBaseAnimationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JReaderBaseAnimationViewController.m; sourceTree = "<group>"; };
 		C424DBA61F5D533C0092370C /* JReaderAnimationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JReaderAnimationViewController.h; sourceTree = "<group>"; };
@@ -70,7 +97,7 @@
 		C424DBAD1F5D533C0092370C /* JReaderFormatString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JReaderFormatString.h; sourceTree = "<group>"; };
 		C424DBAE1F5D533C0092370C /* JReaderFormatString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JReaderFormatString.m; sourceTree = "<group>"; };
 		C424DBAF1F5D533C0092370C /* JReaderPaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JReaderPaging.h; sourceTree = "<group>"; };
-		C424DBB01F5D533C0092370C /* JReaderPaging.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = JReaderPaging.mm; sourceTree = "<group>"; };
+		C424DBB01F5D533C0092370C /* JReaderPaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JReaderPaging.m; sourceTree = "<group>"; };
 		C424DBB21F5D533C0092370C /* JReaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JReaderView.h; sourceTree = "<group>"; };
 		C424DBB31F5D533C0092370C /* JReaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JReaderView.m; sourceTree = "<group>"; };
 		C424DBB41F5D533C0092370C /* JReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JReaderViewController.h; sourceTree = "<group>"; };
@@ -79,6 +106,31 @@
 		C429C3761F7130EB0026E639 /* NSObject+JReaderKVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JReaderKVO.m"; sourceTree = "<group>"; };
 		C43F54801F6A92B3008133DD /* JReaderNoneAnimationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JReaderNoneAnimationViewController.h; sourceTree = "<group>"; };
 		C43F54811F6A92B3008133DD /* JReaderNoneAnimationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JReaderNoneAnimationViewController.m; sourceTree = "<group>"; };
+		C43FEBE71F73C704008E3629 /* ReaderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderModel.h; sourceTree = "<group>"; };
+		C43FEBE81F73C704008E3629 /* ReaderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderModel.m; sourceTree = "<group>"; };
+		C43FEBEA1F73C73A008E3629 /* ChapterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterModel.h; sourceTree = "<group>"; };
+		C43FEBEB1F73C73A008E3629 /* ChapterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterModel.m; sourceTree = "<group>"; };
+		C43FEBEE1F73C84B008E3629 /* 62447 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62447; sourceTree = "<group>"; };
+		C43FEBEF1F73C84B008E3629 /* 62448 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62448; sourceTree = "<group>"; };
+		C43FEBF01F73C84B008E3629 /* 62449 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62449; sourceTree = "<group>"; };
+		C43FEBF11F73C84B008E3629 /* 62450 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62450; sourceTree = "<group>"; };
+		C43FEBF21F73C84B008E3629 /* 62451 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62451; sourceTree = "<group>"; };
+		C43FEBF31F73C84B008E3629 /* 62452 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62452; sourceTree = "<group>"; };
+		C43FEBF41F73C84B008E3629 /* 62453 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62453; sourceTree = "<group>"; };
+		C43FEBF51F73C84B008E3629 /* 62454 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62454; sourceTree = "<group>"; };
+		C43FEBF61F73C84B008E3629 /* 62455 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62455; sourceTree = "<group>"; };
+		C43FEBF71F73C84B008E3629 /* 62456 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62456; sourceTree = "<group>"; };
+		C43FEBF81F73C84B008E3629 /* 62457 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62457; sourceTree = "<group>"; };
+		C43FEBF91F73C84B008E3629 /* 62458 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62458; sourceTree = "<group>"; };
+		C43FEBFA1F73C84B008E3629 /* 62459 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62459; sourceTree = "<group>"; };
+		C43FEBFB1F73C84B008E3629 /* 62460 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62460; sourceTree = "<group>"; };
+		C43FEBFC1F73C84B008E3629 /* 62461 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62461; sourceTree = "<group>"; };
+		C43FEBFD1F73C84B008E3629 /* 62462 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62462; sourceTree = "<group>"; };
+		C43FEBFE1F73C84B008E3629 /* 62463 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62463; sourceTree = "<group>"; };
+		C43FEBFF1F73C84B008E3629 /* 62464 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62464; sourceTree = "<group>"; };
+		C43FEC001F73C84B008E3629 /* 62465 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62465; sourceTree = "<group>"; };
+		C43FEC011F73C84B008E3629 /* 62466 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 62466; sourceTree = "<group>"; };
+		C43FEC1C1F73CE3C008E3629 /* ReaderModel */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = ReaderModel; sourceTree = "<group>"; };
 		C46F5E6D1F6B7BC700746BAA /* JReaderCoverAnimationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JReaderCoverAnimationViewController.h; sourceTree = "<group>"; };
 		C46F5E6E1F6B7BC700746BAA /* JReaderCoverAnimationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JReaderCoverAnimationViewController.m; sourceTree = "<group>"; };
 		C46F5E701F6BAFD800746BAA /* JReaderScrollAnimationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JReaderScrollAnimationViewController.h; sourceTree = "<group>"; };
@@ -124,6 +176,9 @@
 		C4BB419D1F5930860052F10C /* WDViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WDViewLayout.m; sourceTree = "<group>"; };
 		C4BB41A21F5930C80052F10C /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		C4BB41AD1F597A620052F10C /* text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = text; sourceTree = "<group>"; };
+		C4CF92BE1F78AA2F00AA141C /* SetMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetMenuView.h; sourceTree = "<group>"; };
+		C4CF92BF1F78AA2F00AA141C /* SetMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetMenuView.m; sourceTree = "<group>"; };
+		D575E0BDF0ADA5EDF35A5F4C /* Pods-JReaderDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JReaderDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JReaderDemo/Pods-JReaderDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BC7AF58EFFF8D7E63B296F9 /* libPods-JReaderDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +207,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57B212DF01EC6E699E933F4C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7A5848C3F4075D2DD0A78B05 /* libPods-JReaderDemo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		65EAE1FFE4F8FC4BFC56CA82 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D575E0BDF0ADA5EDF35A5F4C /* Pods-JReaderDemo.debug.xcconfig */,
+				7EEA8C484C021C3E53A233CA /* Pods-JReaderDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C424DBA21F5D533C0092370C /* JReader */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,7 +263,7 @@
 				C424DBAD1F5D533C0092370C /* JReaderFormatString.h */,
 				C424DBAE1F5D533C0092370C /* JReaderFormatString.m */,
 				C424DBAF1F5D533C0092370C /* JReaderPaging.h */,
-				C424DBB01F5D533C0092370C /* JReaderPaging.mm */,
+				C424DBB01F5D533C0092370C /* JReaderPaging.m */,
 				C429C3751F7130EB0026E639 /* NSObject+JReaderKVO.h */,
 				C429C3761F7130EB0026E639 /* NSObject+JReaderKVO.m */,
 			);
@@ -215,11 +288,50 @@
 			path = JReaderView;
 			sourceTree = "<group>";
 		};
+		C43FEBE61F73C6FB008E3629 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C43FEBE71F73C704008E3629 /* ReaderModel.h */,
+				C43FEBE81F73C704008E3629 /* ReaderModel.m */,
+				C43FEBEA1F73C73A008E3629 /* ChapterModel.h */,
+				C43FEBEB1F73C73A008E3629 /* ChapterModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C43FEBED1F73C84B008E3629 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				C43FEC1C1F73CE3C008E3629 /* ReaderModel */,
+				C43FEBEE1F73C84B008E3629 /* 62447 */,
+				C43FEBEF1F73C84B008E3629 /* 62448 */,
+				C43FEBF01F73C84B008E3629 /* 62449 */,
+				C43FEBF11F73C84B008E3629 /* 62450 */,
+				C43FEBF21F73C84B008E3629 /* 62451 */,
+				C43FEBF31F73C84B008E3629 /* 62452 */,
+				C43FEBF41F73C84B008E3629 /* 62453 */,
+				C43FEBF51F73C84B008E3629 /* 62454 */,
+				C43FEBF61F73C84B008E3629 /* 62455 */,
+				C43FEBF71F73C84B008E3629 /* 62456 */,
+				C43FEBF81F73C84B008E3629 /* 62457 */,
+				C43FEBF91F73C84B008E3629 /* 62458 */,
+				C43FEBFA1F73C84B008E3629 /* 62459 */,
+				C43FEBFB1F73C84B008E3629 /* 62460 */,
+				C43FEBFC1F73C84B008E3629 /* 62461 */,
+				C43FEBFD1F73C84B008E3629 /* 62462 */,
+				C43FEBFE1F73C84B008E3629 /* 62463 */,
+				C43FEBFF1F73C84B008E3629 /* 62464 */,
+				C43FEC001F73C84B008E3629 /* 62465 */,
+				C43FEC011F73C84B008E3629 /* 62466 */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		C47693261F6FD2F500D5867A /* Reader */ = {
 			isa = PBXGroup;
 			children = (
 				C47693271F6FD2F500D5867A /* Controller */,
-				C476932A1F6FD2F500D5867A /* Model */,
+				C43FEBE61F73C6FB008E3629 /* Model */,
 				C476932B1F6FD2F500D5867A /* View */,
 			);
 			path = Reader;
@@ -234,13 +346,6 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		C476932A1F6FD2F500D5867A /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		C476932B1F6FD2F500D5867A /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +353,8 @@
 				C476932E1F6FD31F00D5867A /* TapMenuView.m */,
 				C47693301F6FDB7000D5867A /* BottomMenuView.h */,
 				C47693311F6FDB7000D5867A /* BottomMenuView.m */,
+				C4CF92BE1F78AA2F00AA141C /* SetMenuView.h */,
+				C4CF92BF1F78AA2F00AA141C /* SetMenuView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -259,6 +366,8 @@
 				C4BA6EA51F3015C20064D06D /* JReaderDemoTests */,
 				C4BA6EB01F3015C20064D06D /* JReaderDemoUITests */,
 				C4BA6E8A1F3015C20064D06D /* Products */,
+				65EAE1FFE4F8FC4BFC56CA82 /* Pods */,
+				57B212DF01EC6E699E933F4C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -275,6 +384,7 @@
 		C4BA6E8B1F3015C20064D06D /* JReaderDemo */ = {
 			isa = PBXGroup;
 			children = (
+				C43FEBED1F73C84B008E3629 /* Resource */,
 				C4BB41AD1F597A620052F10C /* text */,
 				C47693261F6FD2F500D5867A /* Reader */,
 				C424DBA21F5D533C0092370C /* JReader */,
@@ -341,9 +451,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4BA6EB61F3015C20064D06D /* Build configuration list for PBXNativeTarget "JReaderDemo" */;
 			buildPhases = (
+				CCCB378CD37C521D7557CE39 /* [CP] Check Pods Manifest.lock */,
 				C4BA6E851F3015C20064D06D /* Sources */,
 				C4BA6E861F3015C20064D06D /* Frameworks */,
 				C4BA6E871F3015C20064D06D /* Resources */,
+				98B6B8DF53ABC30013833853 /* [CP] Embed Pods Frameworks */,
+				938996C5D494F60437CACEA8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -441,9 +554,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C43FEC0F1F73C84B008E3629 /* 62459 in Resources */,
+				C43FEC091F73C84B008E3629 /* 62453 in Resources */,
 				C4BA6E9C1F3015C20064D06D /* LaunchScreen.storyboard in Resources */,
+				C43FEC101F73C84B008E3629 /* 62460 in Resources */,
+				C43FEC151F73C84B008E3629 /* 62465 in Resources */,
 				C47693251F6FC02100D5867A /* battery.png in Resources */,
+				C43FEC121F73C84B008E3629 /* 62462 in Resources */,
 				C4BB41AE1F597A620052F10C /* text in Resources */,
+				C43FEC041F73C84B008E3629 /* 62448 in Resources */,
+				C43FEC081F73C84B008E3629 /* 62452 in Resources */,
+				C43FEC111F73C84B008E3629 /* 62461 in Resources */,
+				C43FEC0A1F73C84B008E3629 /* 62454 in Resources */,
+				C43FEC141F73C84B008E3629 /* 62464 in Resources */,
+				C43FEC031F73C84B008E3629 /* 62447 in Resources */,
+				C43FEC0C1F73C84B008E3629 /* 62456 in Resources */,
+				C43FEC1D1F73CE3C008E3629 /* ReaderModel in Resources */,
+				C43FEC0D1F73C84B008E3629 /* 62457 in Resources */,
+				C43FEC051F73C84B008E3629 /* 62449 in Resources */,
+				C43FEC0B1F73C84B008E3629 /* 62455 in Resources */,
+				C43FEC071F73C84B008E3629 /* 62451 in Resources */,
+				C43FEC061F73C84B008E3629 /* 62450 in Resources */,
+				C43FEC131F73C84B008E3629 /* 62463 in Resources */,
+				C43FEC161F73C84B008E3629 /* 62466 in Resources */,
+				C43FEC0E1F73C84B008E3629 /* 62458 in Resources */,
 				C4BA6E991F3015C20064D06D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -464,6 +598,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		938996C5D494F60437CACEA8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JReaderDemo/Pods-JReaderDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98B6B8DF53ABC30013833853 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JReaderDemo/Pods-JReaderDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CCCB378CD37C521D7557CE39 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C4BA6E851F3015C20064D06D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -474,8 +656,9 @@
 				C43F54821F6A92B3008133DD /* JReaderNoneAnimationViewController.m in Sources */,
 				C476932C1F6FD2F500D5867A /* ReaderViewController.m in Sources */,
 				C46F5E721F6BAFD800746BAA /* JReaderScrollAnimationViewController.m in Sources */,
+				C43FEBEC1F73C73A008E3629 /* ChapterModel.m in Sources */,
 				C46F5E6F1F6B7BC700746BAA /* JReaderCoverAnimationViewController.m in Sources */,
-				C424DBBB1F5D533C0092370C /* JReaderPaging.mm in Sources */,
+				C424DBBB1F5D533C0092370C /* JReaderPaging.m in Sources */,
 				C47693201F6FB87800D5867A /* jReaderPageHeaderView.m in Sources */,
 				C47693231F6FB88400D5867A /* jReaderPageFooterView.m in Sources */,
 				C424DBB71F5D533C0092370C /* JReaderAnimationViewController.m in Sources */,
@@ -492,8 +675,10 @@
 				C429C3771F7130EB0026E639 /* NSObject+JReaderKVO.m in Sources */,
 				C424DBB81F5D533C0092370C /* JReaderManager.m in Sources */,
 				C4BB419F1F5930860052F10C /* UIView+WDAutoLayout.m in Sources */,
+				C4CF92C01F78AA2F00AA141C /* SetMenuView.m in Sources */,
 				C476932F1F6FD31F00D5867A /* TapMenuView.m in Sources */,
 				C424DBBD1F5D533C0092370C /* JReaderViewController.m in Sources */,
+				C43FEBE91F73C704008E3629 /* ReaderModel.m in Sources */,
 				C424DBB91F5D533C0092370C /* JReaderModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -635,13 +820,15 @@
 		};
 		C4BA6EB71F3015C20064D06D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D575E0BDF0ADA5EDF35A5F4C /* Pods-JReaderDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = S6SA3H9S2Y;
 				GCC_PREFIX_HEADER = JReaderDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = JReaderDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iyoo.com.reader.JReaderDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = jReader.reader.JReaderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -649,13 +836,15 @@
 		};
 		C4BA6EB81F3015C20064D06D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EEA8C484C021C3E53A233CA /* Pods-JReaderDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = S6SA3H9S2Y;
 				GCC_PREFIX_HEADER = JReaderDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = JReaderDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = iyoo.com.reader.JReaderDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = jReader.reader.JReaderDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

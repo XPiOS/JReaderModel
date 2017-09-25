@@ -21,14 +21,16 @@
  预留自定义字段  可以用来存储 章节索引，防止章节混乱
  */
 @property (nonatomic, copy) id userDefinedProperty;
+
 /**
  页面相关
  */
 @property (nonatomic, copy) NSString *jReaderContentStr;
 @property (nonatomic, assign) CGRect jReaderFrame;
 @property (nonatomic, copy) NSDictionary *jReaderAttributes;
+
 /**
- 章节名称
+ 章节名称相关
  */
 @property (nonatomic, assign) NSString *jReaderNameStr;
 @property (nonatomic, assign) NSRange jReaderNameRange;

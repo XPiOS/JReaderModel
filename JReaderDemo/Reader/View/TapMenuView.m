@@ -18,7 +18,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.backgroundColor = [UIColor orangeColor];
+    self.backgroundColor = [UIColor colorWithRed:77 / 255.0 green:61 / 255.0 blue:31 / 255.0 alpha:0.97];
     [self addSubview:self.backButton];
     self.backButton.frame = CGRectMake(10, 20, 44, 44);
 }

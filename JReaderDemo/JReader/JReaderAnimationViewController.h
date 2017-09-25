@@ -16,14 +16,17 @@
 
 @property (nonatomic, weak, nullable) id<JReaderAnimationViewControllerDelegate> delegate;
 @property (nonatomic, weak, nullable) id<JReaderAnimationViewControllerDataSource>dataSource;
+
 /**
  预留自定义字段  可以用来存储 章节索引，防止章节混乱
  */
 @property (nonatomic, copy, nullable) id userDefinedProperty;
+
 /**
  阅读相关数据
  */
 @property (nonatomic, strong, nullable) JReaderModel *jReaderModel;
+
 /**
  翻页动画类型
  */
@@ -33,6 +36,11 @@
  当前页面索引
  */
 @property (nonatomic, assign) NSInteger jReaderPageIndex;
+
+/**
+ 当前章节总页数
+ */
+@property (nonatomic, assign) NSInteger jReaderPageCount;
 
 /**
  当前页面内容
@@ -71,14 +79,6 @@
 - (void)jReaderAnimationViewController:(nullable JReaderAnimationViewController *)jReaderAnimationViewController didFinishAnimating:(BOOL)finished transitionCompleted:(BOOL)completed;
 
 /**
- 数据发生异常
-
- @param jReaderAnimationViewController 当前控制器
- @param userDefinedProperty 用户自定义字段
- */
-- (void)jReaderAnimationViewController: (nullable JReaderAnimationViewController *)jReaderAnimationViewController dataException: (nullable id)userDefinedProperty;
-
-/**
  点击手势回调（一般用来判断是否显示菜单)
 
  @param jReaderAnimationViewController 当前控制器
@@ -95,19 +95,30 @@
 @protocol JReaderAnimationViewControllerDataSource <NSObject>
 
 /**
- 获取前一章内容
- 
+ 获取指定章节内容
+
  @param jReaderAnimationViewController 当前控制器
- @return 前一章内容
+ @param userDefinedProperty 预留字段 通常设置为章节索引
+ @return 章节内容
  */
-- (nullable NSString *)beforeContent:(nullable JReaderAnimationViewController *)jReaderAnimationViewController;
+- (nullable NSString *)appointContent:(nullable JReaderAnimationViewController *)jReaderAnimationViewController userDefinedProperty:(nullable id)userDefinedProperty;
 
 /**
- 获取下一章内容
- 
+  获取前一章内容
+
  @param jReaderAnimationViewController 当前控制器
+ @param userDefinedProperty 预留字段 通常设置为章节索引
+ @return 前一章内容
+ */
+- (nullable NSString *)beforeContent:(nullable JReaderAnimationViewController *)jReaderAnimationViewController userDefinedProperty:(nullable id)userDefinedProperty;
+
+/**
+  获取下一章内容
+
+ @param jReaderAnimationViewController 当前控制器
+ @param userDefinedProperty 预留字段 通常设置为章节索引
  @return 下一章内容
  */
-- (nullable NSString *)afterContent:(nullable JReaderAnimationViewController *)jReaderAnimationViewController;
+- (nullable NSString *)afterContent:(nullable JReaderAnimationViewController *)jReaderAnimationViewController userDefinedProperty:(nullable id)userDefinedProperty;
 
 @end

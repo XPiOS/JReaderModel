@@ -14,10 +14,13 @@
 
 @property (nonatomic, strong) JReaderAnimationViewController *jReaderAnimationViewController;
 @property (nonatomic, strong) UIView *jReaderBrightnessView;
+@property (nonatomic, assign) NSInteger jReaderCurrentPageIndex;
 
 @end
 
 @implementation JReaderManager
+
+@synthesize userDefinedProperty = _userDefinedProperty;
 
 - (instancetype)initWithJReaderModel:(JReaderModel *)jReaderModel {
     self = [super init];
@@ -26,6 +29,7 @@
     }
     return self;
 }
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -33,6 +37,7 @@
     }
     return self;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addChildViewController:self.jReaderAnimationViewController];
@@ -48,7 +53,6 @@
 }
 
 #pragma mark - 内部方法
-
 #pragma mark 获取Model所有属性
 - (NSArray *)allModelPropertyNames {
     NSMutableArray *propertyNamesArr = [NSMutableArray array];
@@ -79,30 +83,37 @@
 }
 #pragma mark KVO回调
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"jReaderChapterName"]) {
+        return;
+    }
     if ([keyPath isEqualToString:@"jReaderBrightness"]) {
         self.jReaderBrightnessView.alpha = 0.8 - (1 - self.jReaderModel.jReaderBrightness) * 0.8;
         return;
     }
-    
+    if (![keyPath isEqualToString:@"jReaderPageIndex"]) {
+        self.jReaderCurrentPageIndex = self.jReaderPageIndex;
+        self.jReaderModel.jReaderPageIndex = self.jReaderCurrentPageIndex;
+    }
     if ([keyPath isEqualToString:@"jReaderAttributes"]) {
         // 富文本属性 修改，则从新计算索引
         NSString *pageStr = self.jReaderAnimationViewController.jReaderPageString;
         [self jReaderManagerReload];
-        NSInteger index = [self.jReaderAnimationViewController jReaderPageIndexWith:pageStr];
-        self.jReaderModel.jReaderPageIndex = index;
+        self.jReaderCurrentPageIndex = [self.jReaderAnimationViewController jReaderPageIndexWith:pageStr];
         return;
-    }
-    
-    if (![keyPath isEqualToString:@"jReaderPageIndex"]) {
-        self.jReaderModel.jReaderPageIndex = self.jReaderPageIndex;
     }
     [self jReaderManagerReload];
 }
 
 #pragma mark 从新加载数据
 - (void)jReaderManagerReload {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadJReaderAnimationViewController) object:nil];
+    [self performSelector:@selector(reloadJReaderAnimationViewController) withObject:nil afterDelay:0];
+}
+#pragma mark 刷新翻页控制器
+- (void)reloadJReaderAnimationViewController {
+    NSLog(@"JReader 刷新 ");
     // 1、判断阅读类型
-    // 2、根据阅读类型，
+    // 2、根据阅读类型
     self.jReaderBrightnessView.alpha = 0.8 - (1 - self.jReaderModel.jReaderBrightness) * 0.8;
     self.jReaderAnimationViewController.jReaderModel = self.jReaderModel;
 }
@@ -110,6 +121,7 @@
 - (NSInteger)jReaderPageIndexWith:(NSString *)pageStr {
     return [self.jReaderAnimationViewController jReaderPageIndexWith:pageStr];
 }
+
 #pragma mark - JReaderAnimationViewControllerDataSource
 #pragma mark 翻页开始
 - (void)jReaderAnimationViewController:(nullable JReaderAnimationViewController *)jReaderAnimationViewController {
@@ -123,26 +135,28 @@
         [self.delegate jReaderManager:self didFinishAnimating:finished transitionCompleted:completed];
     }
 }
+
 #pragma mark - JReaderAnimationViewControllerDelegate
+#pragma mark 获取指定章节内容
+- (NSString *)appointContent:(JReaderAnimationViewController *)jReaderAnimationViewController userDefinedProperty:(id)userDefinedProperty {
+    if ([self.dataSource respondsToSelector:@selector(jReaderManager:userDefinedPropertyAppoint:)]) {
+        return [self.dataSource jReaderManager:self userDefinedPropertyAppoint:userDefinedProperty];
+    }
+    return nil;
+}
 #pragma mark 获取上一章内容 
-- (nullable NSString *)beforeContent:(nullable JReaderAnimationViewController *)jReaderAnimationViewController {
+- (nullable NSString *)beforeContent:(nullable JReaderAnimationViewController *)jReaderAnimationViewController userDefinedProperty:(nullable id)userDefinedProperty {
     if ([self.dataSource respondsToSelector:@selector(jReaderManager:userDefinedPropertyBefore:)]) {
-        return [self.dataSource jReaderManager:self userDefinedPropertyBefore:self.userDefinedProperty];
+        return [self.dataSource jReaderManager:self userDefinedPropertyBefore:userDefinedProperty];
     }
     return nil;
 }
 #pragma mark 获取下一章内容
-- (nullable NSString *)afterContent:(nullable JReaderAnimationViewController *)jReaderAnimationViewController {
+- (nullable NSString *)afterContent:(nullable JReaderAnimationViewController *)jReaderAnimationViewController userDefinedProperty:(nullable id)userDefinedProperty {
     if ([self.dataSource respondsToSelector:@selector(jReaderManager:userDefinedPropertyAfter:)]) {
-        return [self.dataSource jReaderManager:self userDefinedPropertyAfter:self.userDefinedProperty];
+        return [self.dataSource jReaderManager:self userDefinedPropertyAfter:userDefinedProperty];
     }
     return nil;
-}
-#pragma mark 数据发生异常
-- (void)jReaderAnimationViewController: (nullable JReaderAnimationViewController *)jReaderAnimationViewController dataException: (nullable id)userDefinedProperty {
-    if ([self.delegate respondsToSelector:@selector(jReaderManager:dataException:)]) {
-        [self.delegate jReaderManager:self dataException:userDefinedProperty];
-    }
 }
 #pragma mark 点击手势回调
 - (BOOL)jReaderAnimationViewController:(JReaderAnimationViewController *)jReaderAnimationViewController tapGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer {
@@ -156,7 +170,7 @@
 - (void)setJReaderModel:(JReaderModel *)jReaderModel {
     _jReaderModel = jReaderModel;
     [self addObserver];
-    [self jReaderManagerReload];
+    [self reloadJReaderAnimationViewController];
 }
 - (JReaderAnimationViewController *)jReaderAnimationViewController {
     if (!_jReaderAnimationViewController) {
@@ -172,6 +186,9 @@
 - (NSInteger)jReaderPageIndex {
     return self.jReaderAnimationViewController.jReaderPageIndex;
 }
+- (NSInteger)jReaderPageCount {
+    return self.jReaderAnimationViewController.jReaderPageCount;
+}
 - (UIView *)jReaderBrightnessView {
     if (!_jReaderBrightnessView) {
         _jReaderBrightnessView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, JREADER_SCREEN_WIDTH, JREADER_SCREEN_HEIGHT)];
@@ -180,5 +197,12 @@
         _jReaderBrightnessView.userInteractionEnabled = NO;
     }
     return _jReaderBrightnessView;
+}
+- (void)setUserDefinedProperty:(id)userDefinedProperty {
+    _userDefinedProperty = userDefinedProperty;
+    self.jReaderAnimationViewController.userDefinedProperty = userDefinedProperty;
+}
+- (id)userDefinedProperty {
+    return self.jReaderAnimationViewController.userDefinedProperty;
 }
 @end

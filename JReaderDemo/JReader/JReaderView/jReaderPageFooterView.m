@@ -12,12 +12,9 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
     [self addSubview:self.progressLabel];
     self.progressLabel.frame = CGRectMake(self.bounds.size.width / 2, 0, self.bounds.size.width / 2, self.bounds.size.height);
-    
     [self addSubview:self.batteryImageView];
-    
     self.batteryImageView.frame = CGRectMake(0, (self.bounds.size.height - 10) / 2, 25.0f, 10.0f);
 }
 
@@ -30,6 +27,7 @@
     }
     return _progressLabel;
 }
+
 - (UIImageView *)batteryImageView {
     if (!_batteryImageView) {
         _batteryImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"battery"]];

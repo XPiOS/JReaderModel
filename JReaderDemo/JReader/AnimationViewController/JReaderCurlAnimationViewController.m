@@ -18,18 +18,11 @@
 
 @implementation JReaderCurlAnimationViewController
 
-- (instancetype)initWithViewController:(UIViewController *)viewController {
-    self = [super initWithViewController:viewController];
-    if (self) {
-        [self.pageViewController setViewControllers:@[self.currentViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-        [self addChildViewController:self.pageViewController];
-        [self.view addSubview:self.pageViewController.view];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.pageViewController setViewControllers:@[self.currentViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self addChildViewController:self.pageViewController];
+    [self.view addSubview:self.pageViewController.view];
     // Do any additional setup after loading the view.
 }
 
@@ -44,7 +37,7 @@
     JReaderViewController *readerVC3 = (JReaderViewController *)[self pageViewController:self.pageViewController viewControllerBeforeViewController:readerVC2];
     JReaderBackViewController *readerVC4 = [[JReaderBackViewController alloc] initWithViewController:readerVC3];
     if (readerVC1 && readerVC2 &&readerVC3 && readerVC4) {
-        [_pageViewController setViewControllers:@[readerVC3, readerVC4] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:^(BOOL finished) {
+        [self.pageViewController setViewControllers:@[readerVC3, readerVC4] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:^(BOOL finished) {
         }];
     }
 }
@@ -62,13 +55,14 @@
 
 #pragma mark - UIPageViewControllerDelegate
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
-    // 动画开始
     if ([self.delegate respondsToSelector:@selector(jReaderBaseAnimationViewController:)]) {
         [self.delegate jReaderBaseAnimationViewController:self];
     }
 }
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
-    // 动画结束
+    if (completed) {
+        self.currentViewController = self.nextViewController;
+    }
     if ([self.delegate respondsToSelector:@selector(jReaderBaseAnimationViewController:didFinishAnimating:transitionCompleted:)]) {
         [self.delegate jReaderBaseAnimationViewController:self didFinishAnimating:finished transitionCompleted:completed];
     }
@@ -77,14 +71,10 @@
 #pragma mark - UIPageViewControllerDataSource
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
     if ([viewController isKindOfClass:[JReaderViewController class]]) {
-        self.currentViewController = viewController;
         return [[JReaderBackViewController alloc] initWithViewController:viewController];
     } else {
         if ([self.dataSource respondsToSelector:@selector(jReaderBaseAnimationViewController:viewControllerBeforeViewController:)]) {
             self.nextViewController = [self.dataSource jReaderBaseAnimationViewController:self viewControllerBeforeViewController:self.currentViewController];
-            if (self.nextViewController) {
-                self.currentViewController = self.nextViewController;
-            }
             return self.nextViewController;
         }
         return nil;
@@ -92,14 +82,10 @@
 }
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
     if ([viewController isKindOfClass:[JReaderViewController class]]) {
-        self.currentViewController = viewController;
         return [[JReaderBackViewController alloc] initWithViewController:viewController];
     } else {
         if ([self.dataSource respondsToSelector:@selector(jReaderBaseAnimationViewController:viewControllerAfterViewController:)]) {
             self.nextViewController = [self.dataSource jReaderBaseAnimationViewController:self viewControllerAfterViewController:self.currentViewController];
-            if (self.nextViewController) {
-                self.currentViewController = self.nextViewController;
-            }
             return self.nextViewController;
         }
         return nil;
@@ -109,7 +95,7 @@
 #pragma mark - get/set
 - (UIPageViewController *)pageViewController {
     if (!_pageViewController) {
-        _pageViewController = [[UIPageViewController alloc] init];
+        _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:@{UIPageViewControllerOptionSpineLocationKey:@10}];
         _pageViewController.delegate = self;
         _pageViewController.dataSource = self;
         _pageViewController.view.backgroundColor = [UIColor clearColor];

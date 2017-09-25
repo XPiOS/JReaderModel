@@ -22,6 +22,13 @@
 
 @implementation JReaderViewController
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -46,6 +53,11 @@
     [self.view addSubview:self.footerView];
     self.footerView.progressLabel.text = [NSString stringWithFormat:@"%zd / %zd", self.jReaderPageIndex + 1, self.jReaderPageCount];
     self.footerView.frame = CGRectMake(self.jReaderFrame.origin.x, self.jReaderFrame.origin.y + self.jReaderFrame.size.height, self.jReaderFrame.size.width, self.view.bounds.size.height - self.jReaderFrame.origin.y - self.jReaderFrame.size.height);
+}
+
+#pragma mark - get/set
+- (void)setJReaderNameStr:(NSString *)jReaderNameStr {
+    _jReaderNameStr = [jReaderNameStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
 }
 - (jReaderPageHeaderView *)headerView {
     if (!_headerView) {

@@ -10,22 +10,15 @@
 
 @interface BottomMenuView ()
 
-@property (nonatomic, strong) UIButton *fontAddButton;
-@property (nonatomic, strong) UIButton *fontSubButton;
+@property (nonatomic, strong) UIButton *beforeButton;
+@property (nonatomic, strong) UIButton *afterButton;
+@property (nonatomic, strong) UISlider *progressSlider;
 
-@property (nonatomic, strong) UIButton *brightnessAddButton;
-@property (nonatomic, strong) UIButton *brightnessSubButton;
+@property (nonatomic, strong) UIView *lineView;
 
-@property (nonatomic, strong) UIButton *lineSpaceAddButton;
-@property (nonatomic, strong) UIButton *lineSpaceSubButton;
-
-@property (nonatomic, strong) UIButton *colorButton1;
-@property (nonatomic, strong) UIButton *colorButton2;
-
-@property (nonatomic, strong) UIButton *curlButton;
-@property (nonatomic, strong) UIButton *scrollButton;
-@property (nonatomic, strong) UIButton *coverButton;
-@property (nonatomic, strong) UIButton *noneButton;
+@property (nonatomic, strong) UIButton *directoryButton;
+@property (nonatomic, strong) UIButton *nightButton;
+@property (nonatomic, strong) UIButton *setButton;
 
 @end
 
@@ -39,190 +32,139 @@
     return self;
 }
 
-- (void)initView {
-    self.backgroundColor = [UIColor colorWithRed:160 / 255.0 green:160 / 255.0 blue:160 / 255.0 alpha:1];
-    [self addSubview:self.fontAddButton];
-    self.fontAddButton.wd_layout
-    .leftSpaceToSuperView(60)
-    .bottomSpaceToSuperView(10)
-    .width(60)
-    .height(30);
-    
-    [self addSubview:self.fontSubButton];
-    self.fontSubButton.wd_layout
-    .topEqualToView(self.fontAddButton)
-    .rightSpaceToSuperView(60)
-    .bottomEqualToView(self.fontAddButton)
-    .widthEqualToView(self.fontAddButton);
-    
-    [self addSubview:self.brightnessAddButton];
-    self.brightnessAddButton.wd_layout
-    .leftEqualToView(self.fontAddButton)
-    .bottomSpaceToView(self.fontAddButton, 10)
-    .rightEqualToView(self.fontAddButton)
-    .heightEqualToView(self.fontAddButton);
-    
-    [self addSubview:self.brightnessSubButton];
-    self.brightnessSubButton.wd_layout
-    .leftEqualToView(self.fontSubButton)
-    .bottomSpaceToView(self.fontSubButton, 10)
-    .rightEqualToView(self.fontSubButton)
-    .heightEqualToView(self.fontAddButton);
-    
-    [self addSubview:self.lineSpaceAddButton];
-    self.lineSpaceAddButton.wd_layout
-    .leftEqualToView(self.brightnessAddButton)
-    .bottomSpaceToView(self.brightnessAddButton, 10)
-    .rightEqualToView(self.brightnessAddButton)
-    .heightEqualToView(self.fontAddButton);
-    
-    [self addSubview:self.lineSpaceSubButton];
-    self.lineSpaceSubButton.wd_layout
-    .leftEqualToView(self.brightnessSubButton)
-    .bottomSpaceToView(self.brightnessSubButton, 10)
-    .rightEqualToView(self.brightnessSubButton)
-    .heightEqualToView(self.fontAddButton);
-    
-    [self addSubview:self.colorButton1];
-    self.colorButton1.wd_layout
-    .leftEqualToView(self.brightnessAddButton)
-    .bottomSpaceToView(self.lineSpaceAddButton, 10)
-    .rightEqualToView(self.lineSpaceAddButton)
-    .heightEqualToView(self.fontAddButton);
-    
-    [self addSubview:self.colorButton2];
-    self.colorButton2.wd_layout
-    .leftEqualToView(self.lineSpaceSubButton)
-    .bottomSpaceToView(self.lineSpaceSubButton, 10)
-    .rightEqualToView(self.lineSpaceSubButton)
-    .heightEqualToView(self.fontAddButton);
-    
-    CGFloat spacing = (SCREEN_WIDTH - 60 * 4) / 5;
-    
-    [self addSubview:self.curlButton];
-    self.curlButton.wd_layout
-    .leftSpaceToSuperView(spacing)
-    .bottomSpaceToView(self.colorButton1, 10)
-    .width(60)
-    .height(30);
-    
-    [self addSubview:self.scrollButton];
-    self.scrollButton.wd_layout
-    .centerYEqualToView(self.curlButton)
-    .leftSpaceToView(self.curlButton, spacing)
-    .widthEqualToView(self.curlButton)
-    .heightEqualToView(self.curlButton);
-    
-    [self addSubview:self.coverButton];
-    self.coverButton.wd_layout
-    .centerYEqualToView(self.curlButton)
-    .leftSpaceToView(self.scrollButton, spacing)
-    .widthEqualToView(self.curlButton)
-    .heightEqualToView(self.curlButton);
-    
-    [self addSubview:self.noneButton];
-    self.noneButton.wd_layout
-    .centerYEqualToView(self.curlButton)
-    .leftSpaceToView(self.coverButton, spacing)
-    .widthEqualToView(self.curlButton)
-    .heightEqualToView(self.curlButton);
-    
+- (void)setProgress:(CGFloat)progress {
+    self.progressSlider.value = progress;
 }
 
+- (void)initView {
+    self.backgroundColor = [UIColor colorWithRed:77 / 255.0 green:61 / 255.0 blue:31 / 255.0 alpha:0.97];
+    
+    [self addSubview:self.beforeButton];
+    self.beforeButton.wd_layout
+    .topEqualToSuperView()
+    .leftSpaceToSuperView(15)
+    .width(44)
+    .height(44);
+    
+    [self addSubview:self.afterButton];
+    self.afterButton.wd_layout
+    .topEqualToSuperView()
+    .rightSpaceToSuperView(15)
+    .widthEqualToView(self.beforeButton)
+    .heightEqualToView(self.beforeButton);
+    
+    [self addSubview:self.progressSlider];
+    self.progressSlider.wd_layout
+    .centerYEqualToView(self.beforeButton)
+    .leftSpaceToView(self.beforeButton, 10)
+    .rightSpaceToView(self.afterButton, 10);
+
+    [self addSubview:self.lineView];
+    self.lineView.wd_layout
+    .topSpaceToView(self.beforeButton, 0)
+    .leftEqualToSuperView()
+    .rightEqualToSuperView()
+    .height(0.5);
+    
+    [self addSubview:self.directoryButton];
+    self.directoryButton.wd_layout
+    .topSpaceToView(self.lineView, 0)
+    .leftSpaceToSuperView(5)
+    .width(44)
+    .height(44);
+    
+    [self addSubview:self.nightButton];
+    self.nightButton.wd_layout
+    .topEqualToView(self.directoryButton)
+    .centerXEqualToSuperView()
+    .width(44)
+    .height(44);
+    
+    [self addSubview:self.setButton];
+    self.setButton.wd_layout
+    .topEqualToView(self.directoryButton)
+    .rightSpaceToSuperView(5)
+    .width(44)
+    .height(44);
+}
+- (void)sliderClick: (UISlider *)slider {
+    if (self.sliderClickBlock) {
+        self.sliderClickBlock(@(slider.value));
+    }
+}
 - (void)buttonClick: (UIButton *)button {
     if (self.buttonClickBlock) {
         self.buttonClickBlock(@(button.tag));
     }
 }
 
-- (UIButton *)createButton: (NSString *)title tag: (NSInteger)tag {
+- (UIButton *)createButtont: (NSInteger)tag {
     UIButton *button = [[UIButton alloc] init];
     button.tag = tag;
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:16];
+    [button setTitleColor:[UIColor colorWithRed:155 / 255.0 green:140 / 255.0 blue:104 / 255.0 alpha:1] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:14];
     [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    button.layer.masksToBounds = YES;
-    button.layer.cornerRadius = 5;
-    button.layer.borderWidth = 1;
-    button.layer.borderColor = [UIColor whiteColor].CGColor;
-    
     return button;
 }
 
 #pragma mark - get/set
-- (UIButton *)fontAddButton {
-    if (!_fontAddButton) {
-        _fontAddButton = [self createButton:@"A+" tag:1];
+- (UIButton *)beforeButton {
+    if (!_beforeButton) {
+        _beforeButton = [self createButtont:1];
+        [_beforeButton setTitle:@"上一章" forState:UIControlStateNormal];
     }
-    return _fontAddButton;
+    return _beforeButton;
 }
-- (UIButton *)fontSubButton {
-    if (!_fontSubButton) {
-        _fontSubButton = [self createButton:@"A-" tag:2];
+- (UIButton *)afterButton {
+    if (!_afterButton) {
+        _afterButton = [self createButtont:2];
+        [_afterButton setTitle:@"下一章" forState:UIControlStateNormal];
     }
-    return _fontSubButton;
+    return _afterButton;
 }
-- (UIButton *)brightnessAddButton {
-    if (!_brightnessAddButton) {
-        _brightnessAddButton = [self createButton:@"亮度+" tag:3];
+- (UISlider *)progressSlider {
+    if (!_progressSlider) {
+        _progressSlider = [[UISlider alloc] init];
+        _progressSlider.minimumValue = 0;
+        _progressSlider.maximumValue = 1;
+        _progressSlider.value = 0;
+        _progressSlider.continuous = YES;
+        _progressSlider.minimumTrackTintColor = [UIColor colorWithRed:147 / 255.0 green:81 / 255.0 blue:44 / 255.0 alpha:1];
+        _progressSlider.maximumTrackTintColor = [UIColor colorWithRed:82 / 255.0 green:69 / 255.0 blue:33 / 255.0 alpha:1];
+        _progressSlider.thumbTintColor = [UIColor colorWithRed:147 / 255.0 green:81 / 255.0 blue:44 / 255.0 alpha:1];
+        [_progressSlider addTarget:self action:@selector(sliderClick:) forControlEvents:UIControlEventValueChanged];
     }
-    return _brightnessAddButton;
+    return _progressSlider;
 }
-- (UIButton *)brightnessSubButton {
-    if (!_brightnessSubButton) {
-        _brightnessSubButton = [self createButton:@"亮度-" tag:4];
+- (UIView *)lineView {
+    if (!_lineView) {
+        _lineView = [[UIView alloc] init];
+        _lineView.backgroundColor = [UIColor colorWithRed:85 / 255.0 green:71 / 255.0 blue:36 / 255.0 alpha:1];
     }
-    return _brightnessSubButton;
+    return _lineView;
 }
-- (UIButton *)lineSpaceAddButton {
-    if (!_lineSpaceAddButton) {
-        _lineSpaceAddButton = [self createButton:@"间距+" tag:5];
+- (UIButton *)directoryButton {
+    if (!_directoryButton) {
+        _directoryButton = [self createButtont:3];
+        [_directoryButton setImage:[UIImage imageNamed:@"directoryImage"] forState:UIControlStateNormal];
     }
-    return _lineSpaceAddButton;
+    return _directoryButton;
 }
-- (UIButton *)lineSpaceSubButton {
-    if (!_lineSpaceSubButton) {
-        _lineSpaceSubButton = [self createButton:@"间距-" tag:6];
+- (UIButton *)nightButton {
+    if (!_nightButton) {
+        _nightButton = [self createButtont:4];
+        [_nightButton setImage:[UIImage imageNamed:@"nightImage"] forState:UIControlStateNormal];
     }
-    return _lineSpaceSubButton;
+    return _nightButton;
 }
-- (UIButton *)colorButton1 {
-    if (!_colorButton1) {
-        _colorButton1 = [self createButton:@"颜色1" tag:7];
+- (UIButton *)setButton {
+    if (!_setButton) {
+        _setButton = [self createButtont:5];
+        [_setButton setTitle:@"Aa" forState:UIControlStateNormal];
+        _setButton.titleLabel.font = [UIFont systemFontOfSize:18];
     }
-    return _colorButton1;
+    return _setButton;
 }
-- (UIButton *)colorButton2 {
-    if (!_colorButton2) {
-        _colorButton2 = [self createButton:@"颜色2" tag:8];
-    }
-    return _colorButton2;
-}
-- (UIButton *)curlButton {
-    if (!_curlButton) {
-        _curlButton = [self createButton:@"仿真" tag:9];
-    }
-    return _curlButton;
-}
-- (UIButton *)scrollButton {
-    if (!_scrollButton) {
-        _scrollButton = [self createButton:@"平滑" tag:10];
-    }
-    return _scrollButton;
-}
-- (UIButton *)coverButton {
-    if (!_coverButton) {
-        _coverButton = [self createButton:@"覆盖" tag:11];
-    }
-    return _coverButton;
-}
-- (UIButton *)noneButton {
-    if (!_noneButton) {
-        _noneButton = [self createButton:@"无" tag:12];
-    }
-    return _noneButton;
-}
+//@property (nonatomic, strong) UIButton *setButton;
 
 @end

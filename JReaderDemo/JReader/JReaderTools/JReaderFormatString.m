@@ -24,21 +24,21 @@
         NSRange range;
         if (stringPointer + MAX_TEXT_LENGHT > chapterStr.length) {
             NSString *str = [chapterStr substringFromIndex:stringPointer];
-            str           = [self stringProcessing:str];
+            str = [self stringProcessing:str];
             chapterContent = [chapterContent stringByAppendingString:str];
             break;
         } else {
             range.location = stringPointer;
-            range.length   = MAX_TEXT_LENGHT;
-            NSString *str  = [chapterStr substringWithRange:range];
+            range.length  = MAX_TEXT_LENGHT;
+            NSString *str = [chapterStr substringWithRange:range];
             chapterContent = [chapterContent stringByAppendingString:[self stringProcessing:str]];
-            stringPointer  += MAX_TEXT_LENGHT;
+            stringPointer += MAX_TEXT_LENGHT;
         }
     }
     // 清除字符串开头和结尾的多余字符
     chapterContent = [self stringHeadAndTailProcessing:chapterContent];
     // 文章开头插入两个空格
-    chapterContent = [NSString stringWithFormat:@"　　%@",chapterContent];
+    chapterContent = [NSString stringWithFormat:@"\n\n　　%@",chapterContent];
     return chapterContent;
 }
 

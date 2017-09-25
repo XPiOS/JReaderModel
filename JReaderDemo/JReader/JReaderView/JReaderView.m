@@ -24,6 +24,7 @@
     }
     return self;
 }
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self setRender];
@@ -38,6 +39,7 @@
     CGContextConcatCTM(context, transform);
     CTFrameDraw(self.readerCTFrame, context);
 }
+
 #pragma mark - 设置渲染参数
 - (void)setRender {
     NSMutableAttributedString *attrString = [[NSMutableAttributedString  alloc] initWithString:self.jReaderContentStr];

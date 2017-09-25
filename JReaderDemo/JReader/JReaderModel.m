@@ -42,5 +42,8 @@
     }
     return _jReaderChapterNameAttributes;
 }
-
+#pragma mark 设置章节标题时，加上一个换行
+- (void)setJReaderChapterName:(NSString *)jReaderChapterName {
+    _jReaderChapterName = [NSString stringWithFormat:@"\n%@", jReaderChapterName];
+}
 @end

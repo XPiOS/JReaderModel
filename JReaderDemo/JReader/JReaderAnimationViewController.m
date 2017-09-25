@@ -22,6 +22,8 @@
 @property (nonatomic, strong) JReaderBaseAnimationViewController *jReaderBaseAnimationViewController;
 @property (nonatomic, strong) NSString *jReaderTextString;
 
+@property (nonatomic, assign) BOOL jReaderBefore;
+
 @end
 
 @implementation JReaderAnimationViewController
@@ -42,13 +44,13 @@
 #pragma mark - 内部方法
 #pragma mark 从新加载数据
 - (void)jReaderReloadData {
-    
     self.jReaderPageIndex = self.jReaderModel.jReaderPageIndex;
     self.jReaderTextString = self.jReaderModel.jReaderTextString;
     // 分页
     [self reloadJReaderPaging];
-
-    if (self.jReaderBaseAnimationViewController) {
+    if (self.jReaderBaseAnimationViewController.view.superview) {
+        self.jReaderBaseAnimationViewController.delegate = nil;
+        self.jReaderBaseAnimationViewController.dataSource = nil;
         [self.jReaderBaseAnimationViewController.view removeFromSuperview];
         [self.jReaderBaseAnimationViewController removeFromParentViewController];
         self.jReaderBaseAnimationViewController = nil;
@@ -80,25 +82,21 @@
     self.jReaderBaseAnimationViewController.dataSource = self;
     [self addChildViewController:self.jReaderBaseAnimationViewController];
     [self.view addSubview:self.jReaderBaseAnimationViewController.view];
-    
 }
+
 #pragma mark 分页
 - (void)reloadJReaderPaging {
     NSString *content;
     if (self.jReaderModel.jReaderChapterName) {
-        content = [NSString stringWithFormat:@"%@\n%@", self.jReaderModel.jReaderChapterName, [JReaderFormatString jReaderFormatString:self.jReaderTextString]];
-        [self.jReaderPaging paging:content attributes:self.jReaderModel.jReaderAttributes rect:self.jReaderModel.jReaderFrame nameRange:NSMakeRange(0, self.jReaderModel.jReaderChapterName.length + 1) nameAttributes:self.jReaderModel.jReaderChapterNameAttributes];
+        content = [NSString stringWithFormat:@"%@%@", self.jReaderModel.jReaderChapterName, [JReaderFormatString jReaderFormatString:self.jReaderTextString]];
+        [self.jReaderPaging paging:content attributes:self.jReaderModel.jReaderAttributes rect:self.jReaderModel.jReaderFrame nameRange:NSMakeRange(0, self.jReaderModel.jReaderChapterName.length) nameAttributes:self.jReaderModel.jReaderChapterNameAttributes];
     } else {
         content = [JReaderFormatString jReaderFormatString:self.jReaderTextString];
         [self.jReaderPaging paging:content attributes:self.jReaderModel.jReaderAttributes rect:self.jReaderModel.jReaderFrame nameRange:NSMakeRange(0, 0) nameAttributes:self.jReaderModel.jReaderChapterNameAttributes];
     }
-
 }
 #pragma mark 创建阅读页面控制器
 - (UIViewController *)createReaderViewController: (NSUInteger)pageIndex {
-    
-    NSLog(@"将要 绘制的页面 Index  %zd", pageIndex);
-    
     JReaderViewController *jReaderViewController = [[JReaderViewController alloc] init];
     jReaderViewController.jReaderContentStr = [self.jReaderPaging stringOfPage:pageIndex];
     jReaderViewController.jReaderFrame = self.jReaderModel.jReaderFrame;
@@ -107,10 +105,9 @@
     jReaderViewController.jReaderPageCount = self.jReaderPaging.pageCount;
     jReaderViewController.jReaderNameStr = self.jReaderModel.jReaderChapterName;
     if (self.jReaderModel.jReaderChapterName && pageIndex == 0) {
-        jReaderViewController.jReaderNameRange = NSMakeRange(0, self.jReaderModel.jReaderChapterName.length + 1);
+        jReaderViewController.jReaderNameRange = NSMakeRange(0, self.jReaderModel.jReaderChapterName.length);
         jReaderViewController.jReaderNameAttributes = self.jReaderModel.jReaderChapterNameAttributes;
     }
-
     if (self.jReaderModel.jReaderBackgroundImage) {
         jReaderViewController.view.backgroundColor = [UIColor colorWithPatternImage:self.jReaderModel.jReaderBackgroundImage];
     } else {
@@ -140,6 +137,25 @@
 }
 #pragma mark 翻页结束
 - (void)jReaderBaseAnimationViewController:(nullable JReaderBaseAnimationViewController *)jReaderBaseAnimationViewController didFinishAnimating:(BOOL)finished transitionCompleted:(BOOL)completed {
+    if (finished && !completed) {
+        if (self.jReaderBefore) {
+            if ([self.dataSource respondsToSelector:@selector(appointContent:userDefinedProperty:)]) {
+                NSString *textStr = [self.dataSource afterContent:self userDefinedProperty: self.userDefinedProperty];
+                if (textStr) {
+                    self.jReaderTextString = textStr;
+                    [self reloadJReaderPaging];
+                }
+            }
+        } else {
+            if ([self.dataSource respondsToSelector:@selector(beforeContent:userDefinedProperty:)]) {
+                NSString *textStr = [self.dataSource beforeContent:self userDefinedProperty:self.userDefinedProperty];
+                if (textStr) {
+                    self.jReaderTextString = textStr;
+                    [self reloadJReaderPaging];
+                }
+            }
+        }
+    }
     if ([self.delegate respondsToSelector:@selector(jReaderAnimationViewController:didFinishAnimating:transitionCompleted:)]) {
         [self.delegate jReaderAnimationViewController:self didFinishAnimating:finished transitionCompleted:completed];
     }
@@ -148,69 +164,84 @@
 #pragma mark 获取上一页控制器
 - (nullable UIViewController *)jReaderBaseAnimationViewController:(nullable JReaderBaseAnimationViewController *)jReaderBaseAnimationViewController viewControllerBeforeViewController:(nullable UIViewController *)viewController {
     JReaderViewController *jReaderViewController = (JReaderViewController *)viewController;
+    
     if (self.userDefinedProperty != jReaderViewController.userDefinedProperty) {
-        if ([self.delegate respondsToSelector:@selector(jReaderAnimationViewController:dataException:)]) {
-            [self.delegate jReaderAnimationViewController:self dataException:jReaderViewController.userDefinedProperty];
+        if ([self.dataSource respondsToSelector:@selector(appointContent:userDefinedProperty:)]) {
+            NSString *textStr = [self.dataSource appointContent:self userDefinedProperty: jReaderViewController.userDefinedProperty];
+            if (textStr) {
+                self.jReaderTextString = textStr;
+                [self reloadJReaderPaging];
+            } else {
+                return nil;
+            }
+        } else {
+            return nil;
         }
-        return nil;
-    } else {
-        
-        self.jReaderPageIndex = jReaderViewController.jReaderPageIndex - 1;
-        if (self.jReaderPageIndex < 0) {
-            // 获取上一章内容
-            if ([self.dataSource respondsToSelector:@selector(beforeContent:)]) {
-                NSString *textStr = [self.dataSource beforeContent:self];
-                if (textStr) {
-                    self.jReaderTextString = textStr;
-                    [self reloadJReaderPaging];
-                    self.jReaderPageIndex = self.jReaderPaging.pageCount - 1;
-                    return [self createReaderViewController:self.jReaderPageIndex];
-                } else {
-                    self.jReaderPageIndex = jReaderViewController.jReaderPageIndex;
-                    return nil;
-                }
+    }
+    
+    self.jReaderPageIndex = jReaderViewController.jReaderPageIndex - 1;
+    if (self.jReaderPageIndex < 0) {
+        // 获取上一章内容
+        if ([self.dataSource respondsToSelector:@selector(beforeContent:userDefinedProperty:)]) {
+            NSString *textStr = [self.dataSource beforeContent:self userDefinedProperty:jReaderViewController.userDefinedProperty];
+            if (textStr) {
+                self.jReaderBefore = YES;
+                self.jReaderTextString = textStr;
+                [self reloadJReaderPaging];
+                self.jReaderPageIndex = self.jReaderPaging.pageCount - 1;
+                return [self createReaderViewController:self.jReaderPageIndex];
             } else {
                 self.jReaderPageIndex = jReaderViewController.jReaderPageIndex;
                 return nil;
             }
         } else {
-            return [self createReaderViewController:self.jReaderPageIndex];
+            self.jReaderPageIndex = jReaderViewController.jReaderPageIndex;
+            return nil;
         }
+    } else {
+        return [self createReaderViewController:self.jReaderPageIndex];
     }
 }
+
 #pragma mark 获取下一页控制器
 - (nullable UIViewController *)jReaderBaseAnimationViewController:(nullable JReaderBaseAnimationViewController *)jReaderBaseAnimationViewController viewControllerAfterViewController:(nullable UIViewController *)viewController {
     JReaderViewController *jReaderViewController = (JReaderViewController *)viewController;
     if (self.userDefinedProperty != jReaderViewController.userDefinedProperty) {
-        if ([self.delegate respondsToSelector:@selector(jReaderAnimationViewController:dataException:)]) {
-            [self.delegate jReaderAnimationViewController:self dataException:jReaderViewController.userDefinedProperty];
+        if ([self.dataSource respondsToSelector:@selector(appointContent:userDefinedProperty:)]) {
+            NSString *textStr = [self.dataSource appointContent:self userDefinedProperty: jReaderViewController.userDefinedProperty];
+            if (textStr) {
+                self.jReaderTextString = textStr;
+                [self reloadJReaderPaging];
+            } else {
+                return nil;
+            }
+        } else {
+            return nil;
         }
-        return nil;
-    } else {
-        self.jReaderPageIndex = jReaderViewController.jReaderPageIndex + 1;
-        if (self.jReaderPageIndex > self.jReaderPaging.pageCount - 1) {
-            if ([self.dataSource respondsToSelector:@selector(afterContent:)]) {
-                NSString *textStr = [self.dataSource afterContent:self];
-                if (textStr) {
-                    self.jReaderTextString = textStr;
-                    [self reloadJReaderPaging];
-                    self.jReaderPageIndex = 0;
-                    return [self createReaderViewController:self.jReaderPageIndex];
-                } else {
-                    self.jReaderPageIndex = jReaderViewController.jReaderPageIndex;
-                    return nil;
-                }
+    }
+    
+    self.jReaderPageIndex = jReaderViewController.jReaderPageIndex + 1;
+    if (self.jReaderPageIndex > self.jReaderPaging.pageCount - 1) {
+        if ([self.dataSource respondsToSelector:@selector(afterContent:userDefinedProperty:)]) {
+            NSString *textStr = [self.dataSource afterContent:self userDefinedProperty:jReaderViewController.userDefinedProperty];
+            if (textStr) {
+                self.jReaderBefore = NO;
+                self.jReaderTextString = textStr;
+                [self reloadJReaderPaging];
+                self.jReaderPageIndex = 0;
+                return [self createReaderViewController:self.jReaderPageIndex];
             } else {
                 self.jReaderPageIndex = jReaderViewController.jReaderPageIndex;
                 return nil;
             }
         } else {
-            NSLog(@"当前页  Index  %zd", self.jReaderPageIndex);
-            return [self createReaderViewController:self.jReaderPageIndex];
+            self.jReaderPageIndex = jReaderViewController.jReaderPageIndex;
+            return nil;
         }
+    } else {
+        return [self createReaderViewController:self.jReaderPageIndex];
     }
 }
-
 #pragma mark - get/set
 - (JReaderPaging *)jReaderPaging {
     if (!_jReaderPaging) {
@@ -224,5 +255,8 @@
 }
 - (NSString *)jReaderPageString {
     return ((JReaderViewController *)self.jReaderBaseAnimationViewController.currentViewController).jReaderContentStr;
+}
+- (NSInteger)jReaderPageCount {
+    return self.jReaderPaging.pageCount;
 }
 @end

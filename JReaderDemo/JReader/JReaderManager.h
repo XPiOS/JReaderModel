@@ -21,18 +21,11 @@
  阅读相关数据
  */
 @property (nonatomic, strong, nullable) JReaderModel *jReaderModel;
+
 /**
  预留自定义字段  可以用来存储 章节索引，防止章节混乱
  */
 @property (nonatomic, copy, nullable) id userDefinedProperty;
-/**
- 页眉
- */
-@property (nonatomic, copy, nullable) UIView *jReaderPageHeaderView;
-/**
- 页脚
- */
-@property (nonatomic, copy, nullable) UIView *jReaderPageFooterView;
 
 /**
  当前页面内容
@@ -43,6 +36,11 @@
  当前页面索引
  */
 @property (nonatomic, assign) NSInteger jReaderPageIndex;
+
+/**
+ 当前章节总页数
+ */
+@property (nonatomic, assign) NSInteger jReaderPageCount;
 
 - (instancetype _Nullable )initWithJReaderModel: (nullable JReaderModel *)jReaderModel;
 
@@ -74,14 +72,6 @@
 - (BOOL)jReaderManager: (nullable JReaderManager *)jReaderManager tapGestureRecognizer: (nullable UITapGestureRecognizer *)tapGestureRecognizer;
 
 /**
- 数据发生异常
-
- @param jReaderManager 当前控制器
- @param userDefinedProperty 自定义变量
- */
-- (void)jReaderManager: (nullable JReaderManager *)jReaderManager dataException: (nullable id)userDefinedProperty;
-
-/**
  翻页动画开始
 
  @param jReaderManager 当前控制器
@@ -102,11 +92,20 @@
 @protocol JReaderManagerDataSource <NSObject>
 
 /**
- 获取前一章内容
+ 获取指定章节内容
+ 
+ @param jReaderManager 当前控制器
+ @param userDefinedProperty 预留字段 通常设置为章节索引
+ @return 章节内容
+ */
+- (nullable NSString *)jReaderManager:(nullable JReaderManager *)jReaderManager userDefinedPropertyAppoint:(nullable id)userDefinedProperty;
+
+/**
+ 获取上一章内容
 
  @param jReaderManager 当前控制器
  @param userDefinedProperty 预留参数
- @return 前一章内容
+ @return 上一章内容
  */
 - (nullable NSString *)jReaderManager:(nullable JReaderManager *)jReaderManager userDefinedPropertyBefore: (nullable id)userDefinedProperty;
 
