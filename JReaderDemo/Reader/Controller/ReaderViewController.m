@@ -12,6 +12,7 @@
 #import "BottomMenuView.h"
 #import "ReaderModel.h"
 #import "SetMenuView.h"
+#import "ReaderDirectoryViewController.h"
 
 #define kReaderModelFile [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"ReaderModel"]
 
@@ -19,6 +20,7 @@
 
 @property (nonatomic, strong) ReaderModel *readerModel;
 @property (nonatomic, strong) JReaderManager *jReaderManager;
+@property (nonatomic, strong) ReaderDirectoryViewController *readerDirectoryViewController;
 @property (nonatomic, assign) CGRect menuRect;
 @property (nonatomic, assign) BOOL isNightState;
 @property (nonatomic, strong) TapMenuView *tapMenuView;
@@ -77,7 +79,6 @@
     self.menuRect = CGRectMake(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 3, SCREEN_HEIGHT / 3);
     
     ChapterModel *chapterModel = self.readerModel.bookChapterArr[self.chapterIndex];
-    
     JReaderModel *jReaderModel = [[JReaderModel alloc] init];
     jReaderModel.jReaderBookName = self.readerModel.bookName;
     jReaderModel.jReaderAttributes = [self getAttributes:[UIFont systemFontOfSize:self.fontSize] textColor:self.textColor];
@@ -86,13 +87,13 @@
     jReaderModel.jReaderTransitionStyle = PageViewControllerTransitionStylePageCurl;
     jReaderModel.jReaderChapterName = chapterModel.chapterName;
     jReaderModel.jReaderChapterNameAttributes = [self getAttributes:[UIFont systemFontOfSize:self.fontSize + 6] textColor:self.textColor];
-    jReaderModel.jReaderPageIndex = 0;
-    
     NSString *text = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:chapterModel.chapterId] encoding:NSUTF8StringEncoding error:nil];
     jReaderModel.jReaderTextString = text;
-    self.jReaderManager.userDefinedProperty = @(self.chapterIndex);
-    self.jReaderManager.jReaderModel = jReaderModel;
     
+    self.jReaderManager = [[JReaderManager alloc] initWithJReaderModel:jReaderModel pageIndex:1];
+    self.jReaderManager.delegate = self;
+    self.jReaderManager.dataSource = self;
+    self.jReaderManager.userDefinedProperty = @(self.chapterIndex);
     [self.view addSubview:self.jReaderManager.view];
     
     [self.view addSubview:self.tapMenuView];
@@ -171,7 +172,7 @@
 #pragma mark - 底部菜单点击事件响应
 - (void)bottomSliderClick: (CGFloat)value {
     NSInteger pageIndex = value * self.jReaderManager.jReaderPageCount;
-    self.jReaderManager.jReaderModel.jReaderPageIndex = pageIndex >= self.jReaderManager.jReaderPageCount ? self.jReaderManager.jReaderPageCount - 1 : pageIndex;
+    self.jReaderManager.jReaderPageIndex = pageIndex >= self.jReaderManager.jReaderPageCount ? self.jReaderManager.jReaderPageCount - 1 : pageIndex;
 }
 - (void)bottomButtonClick: (NSInteger)tag {
     switch (tag) {
@@ -183,7 +184,8 @@
                 ChapterModel *chapterModel = self.readerModel.bookChapterArr[self.chapterIndex];
                 self.jReaderManager.jReaderModel.jReaderChapterName = chapterModel.chapterName;
                 self.jReaderManager.userDefinedProperty = @(self.chapterIndex);
-                self.jReaderManager.jReaderModel.jReaderPageIndex = 0;
+                self.jReaderManager.jReaderPageIndex = 0;
+                [self.bottomMenuView setProgress:0];
                 self.jReaderManager.jReaderModel.jReaderTextString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:chapterModel.chapterId] encoding:NSUTF8StringEncoding error:nil];
             }
             break;
@@ -196,13 +198,25 @@
                 ChapterModel *chapterModel = self.readerModel.bookChapterArr[self.chapterIndex];
                 self.jReaderManager.jReaderModel.jReaderChapterName = chapterModel.chapterName;
                 self.jReaderManager.userDefinedProperty = @(self.chapterIndex);
-                self.jReaderManager.jReaderModel.jReaderPageIndex = 0;
+                self.jReaderManager.jReaderPageIndex = 0;
+                [self.bottomMenuView setProgress:0];
                 self.jReaderManager.jReaderModel.jReaderTextString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:chapterModel.chapterId] encoding:NSUTF8StringEncoding error:nil];
             }
             break;
         }
         case 3: {
             // 去目录
+            [self hiddnMenuView:nil];
+            [self.view addSubview:self.readerDirectoryViewController.view];
+            [self addChildViewController:self.readerDirectoryViewController];
+            self.readerDirectoryViewController.view.frame = CGRectMake(-SCREEN_WIDTH + 60, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            self.readerDirectoryViewController.view.backgroundColor = [UIColor clearColor];
+            [self.readerDirectoryViewController refreshView:self.readerModel.bookChapterArr];
+            [UIView animateWithDuration:0.3 animations:^{
+                self.jReaderManager.view.frame = CGRectMake(SCREEN_WIDTH - 60, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+                self.readerDirectoryViewController.view.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+                self.readerDirectoryViewController.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            }];
             break;
         }
         case 4: {
@@ -332,6 +346,28 @@
     }
 }
 
+#pragma mark - 目录控制器回调
+- (void)cancelDirectoryView {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.jReaderManager.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        self.readerDirectoryViewController.view.backgroundColor = [UIColor clearColor];
+        self.readerDirectoryViewController.view.frame = CGRectMake(-SCREEN_WIDTH + 60, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    } completion:^(BOOL finished) {
+        [self.readerDirectoryViewController.view removeFromSuperview];
+        [self.readerDirectoryViewController removeFromParentViewController];
+    }];
+}
+- (void)jumpChapter: (NSInteger)chapterIndex {
+    [self cancelDirectoryView];
+    self.chapterIndex = chapterIndex;
+    ChapterModel *chapterModel = self.readerModel.bookChapterArr[self.chapterIndex];
+    self.jReaderManager.jReaderModel.jReaderChapterName = chapterModel.chapterName;
+    self.jReaderManager.userDefinedProperty = @(self.chapterIndex);
+    self.jReaderManager.jReaderPageIndex = 0;
+    [self.bottomMenuView setProgress:0];
+    self.jReaderManager.jReaderModel.jReaderTextString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:chapterModel.chapterId] encoding:NSUTF8StringEncoding error:nil];
+}
+
 #pragma mark - JReaderManagerDelegate
 - (void)jReaderManager:(nullable JReaderManager *)jReaderManager {
     self.jReaderManager.view.userInteractionEnabled = NO;
@@ -389,14 +425,6 @@
 }
 
 #pragma mark - get/set
-- (JReaderManager *)jReaderManager {
-    if (!_jReaderManager) {
-        _jReaderManager = [[JReaderManager alloc] init];
-        _jReaderManager.delegate = self;
-        _jReaderManager.dataSource = self;
-    }
-    return _jReaderManager;
-}
 - (TapMenuView *)tapMenuView {
     if (!_tapMenuView) {
         _tapMenuView = [[TapMenuView alloc] init];
@@ -442,5 +470,17 @@
     }
     return _readerModel;
 }
-
+- (ReaderDirectoryViewController *)readerDirectoryViewController {
+    if (!_readerDirectoryViewController) {
+        _readerDirectoryViewController = [[ReaderDirectoryViewController alloc] init];
+        __weak typeof(self) weakSelf = self;
+        _readerDirectoryViewController.cancelClickBlock = ^(id parameter) {
+            [weakSelf cancelDirectoryView];
+        };
+        _readerDirectoryViewController.cellClickBlock = ^(id parameter) {
+            [weakSelf jumpChapter:[parameter integerValue]];
+        };
+    }
+    return _readerDirectoryViewController;
+}
 @end

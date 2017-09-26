@@ -33,11 +33,6 @@ typedef NS_ENUM(NSInteger, PageViewControllerTransitionStyle) {
 @property (nonatomic, assign) CGRect jReaderFrame;
 
 /**
- 页面索引
- */
-@property (nonatomic, assign) NSInteger jReaderPageIndex;
-
-/**
  阅读页背景颜色
  */
 @property (nonatomic, copy) UIColor *jReaderBackgroundColor;

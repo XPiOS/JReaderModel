@@ -42,7 +42,14 @@
  */
 @property (nonatomic, assign) NSInteger jReaderPageCount;
 
-- (instancetype _Nullable )initWithJReaderModel: (nullable JReaderModel *)jReaderModel;
+/**
+ 创建阅读器
+
+ @param jReaderModel 阅读器配置
+ @param pageIndex 索引页面
+ @return 阅读器对象
+ */
+- (instancetype _Nullable )initWithJReaderModel: (nullable JReaderModel *)jReaderModel pageIndex: (NSInteger)pageIndex;
 
 /**
  刷新页面

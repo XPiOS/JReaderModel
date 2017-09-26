@@ -55,6 +55,13 @@
  */
 - (NSInteger)jReaderPageIndexWith: (nullable NSString *)pageStr;
 
+/**
+ 跳转到指定页面
+
+ @param pageIndex 指定页面索引
+ */
+- (void)jumpViewController: (NSInteger)pageIndex;
+
 @end
 
 

@@ -51,6 +51,13 @@
 - (nullable instancetype)initWithViewController: (nullable UIViewController *)viewController;
 
 /**
+ 跳转到指定页面
+
+ @param viewController 指定页面控制器
+ */
+- (void)jumpViewController:(UIViewController * _Nullable)viewController;
+
+/**
  *  点击手势前翻
  */
 - (void)gotoPreviousPage;

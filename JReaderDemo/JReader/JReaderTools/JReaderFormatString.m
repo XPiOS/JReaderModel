@@ -18,6 +18,9 @@
 
 #pragma mark - 处理字符串内容
 + (NSString *)processingChapterContent:(NSString *)chapterStr {
+    if (!chapterStr) {
+        return @"";
+    }
     NSString *chapterContent = [[NSString alloc] init];
     NSInteger stringPointer  = 0;
     while (YES) {

@@ -30,7 +30,17 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark - 父类方法
+- (void)jumpViewController:(UIViewController *)viewController {
+    self.currentViewController = viewController;
+    JReaderViewController *readerVC1 = (JReaderViewController *)self.currentViewController;
+    JReaderViewController *readerVC2 = (JReaderViewController *)[self pageViewController:self.pageViewController viewControllerBeforeViewController:readerVC1];
+    if (readerVC1 && readerVC2) {
+        [self.pageViewController setViewControllers:@[readerVC1] direction:UIPageViewControllerNavigationDirectionReverse animated:NO completion:^(BOOL finished) {
+        }];
+    }
+}
 - (void)gotoPreviousPage {
     JReaderViewController *readerVC1 = self.pageViewController.viewControllers.lastObject;
     JReaderViewController *readerVC2 = (JReaderViewController *)[self pageViewController:self.pageViewController viewControllerBeforeViewController:readerVC1];

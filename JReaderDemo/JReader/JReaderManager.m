@@ -14,37 +14,29 @@
 
 @property (nonatomic, strong) JReaderAnimationViewController *jReaderAnimationViewController;
 @property (nonatomic, strong) UIView *jReaderBrightnessView;
-@property (nonatomic, assign) NSInteger jReaderCurrentPageIndex;
 
 @end
 
 @implementation JReaderManager
 
 @synthesize userDefinedProperty = _userDefinedProperty;
+@synthesize jReaderPageIndex = _jReaderPageIndex;
 
-- (instancetype)initWithJReaderModel:(JReaderModel *)jReaderModel {
+- (instancetype)initWithJReaderModel:(JReaderModel *)jReaderModel pageIndex:(NSInteger)pageIndex {
     self = [super init];
     if (self) {
+        _jReaderPageIndex = pageIndex;
         self.jReaderModel = jReaderModel;
-    }
-    return self;
-}
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
         self.view.backgroundColor = [UIColor whiteColor];
     }
     return self;
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addChildViewController:self.jReaderAnimationViewController];
     [self.view addSubview:self.jReaderAnimationViewController.view];
     self.jReaderAnimationViewController.view.frame = CGRectMake(0, 0, JREADER_SCREEN_WIDTH, JREADER_SCREEN_HEIGHT);
     [self.view addSubview:self.jReaderBrightnessView];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,6 +65,7 @@
     for (NSString *key in jReaderModelPropertyArr) {
         [self.jReaderModel addObserver:self forKeyPath:key options:NSKeyValueObservingOptionNew context:nil];
     }
+    [self.jReaderAnimationViewController addObserver:self forKeyPath:@"jReaderPageIndex" options:NSKeyValueObservingOptionNew context:nil];
 }
 #pragma mark 移除KVO
 -(void) removeObserver {
@@ -90,15 +83,19 @@
         self.jReaderBrightnessView.alpha = 0.8 - (1 - self.jReaderModel.jReaderBrightness) * 0.8;
         return;
     }
-    if (![keyPath isEqualToString:@"jReaderPageIndex"]) {
-        self.jReaderCurrentPageIndex = self.jReaderPageIndex;
-        self.jReaderModel.jReaderPageIndex = self.jReaderCurrentPageIndex;
-    }
     if ([keyPath isEqualToString:@"jReaderAttributes"]) {
         // 富文本属性 修改，则从新计算索引
         NSString *pageStr = self.jReaderAnimationViewController.jReaderPageString;
         [self jReaderManagerReload];
-        self.jReaderCurrentPageIndex = [self.jReaderAnimationViewController jReaderPageIndexWith:pageStr];
+        _jReaderPageIndex = [self.jReaderAnimationViewController jReaderPageIndexWith:pageStr];
+        return;
+    }
+    if ([keyPath isEqualToString:@"jReaderTextString"]) {
+        [self reloadJReaderAnimationViewController];
+        return;
+    }
+    if ([keyPath isEqualToString:@"jReaderPageIndex"]) {
+        _jReaderPageIndex = self.jReaderAnimationViewController.jReaderPageIndex;
         return;
     }
     [self jReaderManagerReload];
@@ -115,6 +112,7 @@
     // 1、判断阅读类型
     // 2、根据阅读类型
     self.jReaderBrightnessView.alpha = 0.8 - (1 - self.jReaderModel.jReaderBrightness) * 0.8;
+    self.jReaderAnimationViewController.jReaderPageIndex = _jReaderPageIndex;
     self.jReaderAnimationViewController.jReaderModel = self.jReaderModel;
 }
 #pragma mark 获取分页后的索引
@@ -172,6 +170,14 @@
     [self addObserver];
     [self reloadJReaderAnimationViewController];
 }
+- (void)setJReaderPageIndex:(NSInteger)jReaderPageIndex {
+    _jReaderPageIndex = jReaderPageIndex;
+    self.jReaderAnimationViewController.jReaderPageIndex = jReaderPageIndex;
+    [self.jReaderAnimationViewController jumpViewController:jReaderPageIndex];
+}
+- (NSInteger)jReaderPageIndex {
+    return _jReaderPageIndex;
+}
 - (JReaderAnimationViewController *)jReaderAnimationViewController {
     if (!_jReaderAnimationViewController) {
         _jReaderAnimationViewController = [[JReaderAnimationViewController alloc] init];
@@ -182,9 +188,6 @@
 }
 - (NSString *)jReaderPageString {
     return self.jReaderAnimationViewController.jReaderPageString;
-}
-- (NSInteger)jReaderPageIndex {
-    return self.jReaderAnimationViewController.jReaderPageIndex;
 }
 - (NSInteger)jReaderPageCount {
     return self.jReaderAnimationViewController.jReaderPageCount;

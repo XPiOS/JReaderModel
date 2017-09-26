@@ -42,6 +42,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)jumpViewController:(UIViewController *)viewController {
+    [self.currentViewController.view removeFromSuperview];
+    [self.currentViewController removeFromParentViewController];
+    self.currentViewController = viewController;
+    [self.view addSubview:self.currentViewController.view];
+    [self addChildViewController:self.currentViewController];
+}
+
 #pragma mark - 拖动手势
 - (void)panGestureRecognizerClick: (UIPanGestureRecognizer *)panGes {
     // 用于辨别方向

@@ -41,10 +41,15 @@
     return [self.jReaderPaging getPageIndex:pageStr];
 }
 
+#pragma mark 跳转到指定页面
+- (void)jumpViewController:(NSInteger)pageIndex {
+    self.jReaderPageIndex = pageIndex;
+    [self.jReaderBaseAnimationViewController jumpViewController:[self createReaderViewController:self.jReaderPageIndex]];
+}
+
 #pragma mark - 内部方法
 #pragma mark 从新加载数据
 - (void)jReaderReloadData {
-    self.jReaderPageIndex = self.jReaderModel.jReaderPageIndex;
     self.jReaderTextString = self.jReaderModel.jReaderTextString;
     // 分页
     [self reloadJReaderPaging];
