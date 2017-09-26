@@ -122,7 +122,7 @@
                 tail = [self.pageOffsetsArr[i + 1] integerValue];
             }
             if (range.location >= head && range.location <= tail) {
-                return i;
+                return i + 1;
             }
         }
     }
