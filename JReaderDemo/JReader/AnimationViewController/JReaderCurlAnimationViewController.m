@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 
+@property (nonatomic, strong) UIViewController *pageViewNextViewController;
 @end
 
 @implementation JReaderCurlAnimationViewController
@@ -81,13 +82,26 @@
 #pragma mark - UIPageViewControllerDataSource
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
     if ([viewController isKindOfClass:[JReaderViewController class]]) {
-        return [[JReaderBackViewController alloc] initWithViewController:viewController];
-    } else {
         if ([self.dataSource respondsToSelector:@selector(jReaderBaseAnimationViewController:viewControllerBeforeViewController:)]) {
-            self.nextViewController = [self.dataSource jReaderBaseAnimationViewController:self viewControllerBeforeViewController:self.currentViewController];
-            return self.nextViewController;
+            self.pageViewNextViewController = [self.dataSource jReaderBaseAnimationViewController:self viewControllerBeforeViewController:self.currentViewController];
         }
-        return nil;
+        if (self.pageViewNextViewController) {
+            return [[JReaderBackViewController alloc] initWithViewController:self.pageViewNextViewController];
+        } else {
+            return [[JReaderBackViewController alloc] initWithViewController:viewController];
+        }
+    } else {
+        if (self.pageViewNextViewController) {
+            self.nextViewController = self.pageViewNextViewController;
+            self.pageViewNextViewController = nil;
+            return self.nextViewController;
+        } else {
+            if ([self.dataSource respondsToSelector:@selector(jReaderBaseAnimationViewController:viewControllerBeforeViewController:)]) {
+                self.nextViewController = [self.dataSource jReaderBaseAnimationViewController:self viewControllerBeforeViewController:self.currentViewController];
+                return self.nextViewController;
+            }
+            return nil;
+        }
     }
 }
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
