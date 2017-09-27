@@ -10,9 +10,10 @@
 
 @interface ReaderDirectoryViewController : UIViewController
 
-@property (nonatomic, strong) Parameter1Block cellClickBlock;
-@property (nonatomic, strong) Parameter1Block cancelClickBlock;
+@property (nonatomic, copy) Parameter1Block chapterCellClickBlock;
+@property (nonatomic, copy) Parameter1Block markCellClickBlock;
+@property (nonatomic, copy) Parameter1Block cancelClickBlock;
 
-- (void)refreshView: (NSMutableArray *)chapterArr;
+- (void)refreshView: (NSMutableArray *)chapterArr markArr: (NSMutableArray *)markArr;
 
 @end

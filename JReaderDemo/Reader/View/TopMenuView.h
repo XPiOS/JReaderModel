@@ -1,5 +1,5 @@
 //
-//  TapMenuView.h
+//  TopMenuView
 //  JReaderDemo
 //
 //  Created by Jerry on 2017/9/18.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TapMenuView : UIView
+@interface TopMenuView : UIView
 
 @property (nonatomic, copy) Parameter1Block backButtonBlock;
 

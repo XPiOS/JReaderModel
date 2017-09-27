@@ -8,7 +8,7 @@
 
 #import "ReaderViewController.h"
 #import "JReaderManager.h"
-#import "TapMenuView.h"
+#import "TopMenuView.h"
 #import "BottomMenuView.h"
 #import "ReaderModel.h"
 #import "SetMenuView.h"
@@ -23,7 +23,7 @@
 @property (nonatomic, strong) ReaderDirectoryViewController *readerDirectoryViewController;
 @property (nonatomic, assign) CGRect menuRect;
 @property (nonatomic, assign) BOOL isNightState;
-@property (nonatomic, strong) TapMenuView *tapMenuView;
+@property (nonatomic, strong) TopMenuView *topMenuView;
 @property (nonatomic, strong) BottomMenuView *bottomMenuView;
 @property (nonatomic, strong) SetMenuView *setMenuView;
 @property (nonatomic, assign) BOOL statusBarHidden;
@@ -96,8 +96,8 @@
     self.jReaderManager.userDefinedProperty = @(self.chapterIndex);
     [self.view addSubview:self.jReaderManager.view];
     
-    [self.view addSubview:self.tapMenuView];
-    self.tapMenuView.wd_layout
+    [self.view addSubview:self.topMenuView];
+    self.topMenuView.wd_layout
     .topSpaceToSuperView(-64)
     .leftEqualToSuperView()
     .rightEqualToSuperView()
@@ -136,9 +136,9 @@
     [self setNeedsStatusBarAppearanceUpdate];
     [self.bottomMenuView setProgress:self.jReaderManager.jReaderPageIndex / (self.jReaderManager.jReaderPageCount * 1.0)];
     [UIView animateWithDuration:0.3 animations:^{
-        self.tapMenuView.wd_layout
+        self.topMenuView.wd_layout
         .topSpaceToSuperView(0);
-        [self.tapMenuView wd_updateLayout];
+        [self.topMenuView wd_updateLayout];
         
         self.bottomMenuView.wd_layout
         .topSpaceToSuperView(SCREEN_HEIGHT - 88);
@@ -151,9 +151,9 @@
     self.statusBarHidden = YES;
     [self setNeedsStatusBarAppearanceUpdate];
     [UIView animateWithDuration:0.3 animations:^{
-        self.tapMenuView.wd_layout
+        self.topMenuView.wd_layout
         .topSpaceToSuperView(-64);
-        [self.tapMenuView wd_updateLayout];
+        [self.topMenuView wd_updateLayout];
         
         self.bottomMenuView.wd_layout
         .topSpaceToSuperView(SCREEN_HEIGHT);
@@ -168,7 +168,51 @@
         }
     }];
 }
+#pragma mark 获取当前时间戳
+- (NSString *)getCurrentTime {
+    NSDate *date = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"YYYY-MM-dd hh:mm:ss"];
+    NSString *dateTime = [formatter stringFromDate:date];
+    return dateTime;
+}
 
+#pragma mark - 顶部菜单点击事件响应
+- (void)topMenuViewButtonClick: (NSInteger)tag {
+    switch (tag) {
+        case 1:
+            [NSKeyedArchiver archiveRootObject:self.readerModel toFile:kReaderModelFile];
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
+        case 2: {
+            if (!self.readerModel.bookMarkArr) {
+                self.readerModel.bookMarkArr = [NSMutableArray array];
+            }
+            // 防止书签重复添加：1、书签内容完全匹配策略。 2、书签内容 相对章节内容 偏移量起始位置是否匹配。
+            MarkModel *markModel = [[MarkModel alloc] init];
+            markModel.chapterName = self.jReaderManager.jReaderModel.jReaderChapterName;
+            markModel.chapterIndex = self.chapterIndex;
+            markModel.markContent = self.jReaderManager.jReaderPageString;
+            markModel.markTime = [self getCurrentTime];
+            
+            BOOL isState = YES;
+            for (MarkModel *cacheMarkModel in self.readerModel.bookMarkArr) {
+                if ([cacheMarkModel.markContent isEqualToString:markModel.markContent]) {
+                    isState = NO;
+                    break;
+                }
+            }
+            if (isState) {
+                [self.readerModel.bookMarkArr addObject:markModel];
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
 #pragma mark - 底部菜单点击事件响应
 - (void)bottomSliderClick: (CGFloat)value {
     NSInteger pageIndex = value * self.jReaderManager.jReaderPageCount;
@@ -211,7 +255,7 @@
             [self addChildViewController:self.readerDirectoryViewController];
             self.readerDirectoryViewController.view.frame = CGRectMake(-SCREEN_WIDTH + 60, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
             self.readerDirectoryViewController.view.backgroundColor = [UIColor clearColor];
-            [self.readerDirectoryViewController refreshView:self.readerModel.bookChapterArr];
+            [self.readerDirectoryViewController refreshView:self.readerModel.bookChapterArr markArr:self.readerModel.bookMarkArr];
             [UIView animateWithDuration:0.3 animations:^{
                 self.jReaderManager.view.frame = CGRectMake(SCREEN_WIDTH - 60, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
                 self.readerDirectoryViewController.view.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
@@ -367,7 +411,18 @@
     [self.bottomMenuView setProgress:0];
     self.jReaderManager.jReaderModel.jReaderTextString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:chapterModel.chapterId] encoding:NSUTF8StringEncoding error:nil];
 }
-
+- (void)jumpMark: (NSInteger)markIndex {
+    MarkModel *markModel = self.readerModel.bookMarkArr[markIndex];
+    [self cancelDirectoryView];
+    self.chapterIndex = markModel.chapterIndex;
+    ChapterModel *chapterModel = self.readerModel.bookChapterArr[self.chapterIndex];
+    self.jReaderManager.jReaderModel.jReaderChapterName = chapterModel.chapterName;
+    self.jReaderManager.userDefinedProperty = @(self.chapterIndex);
+    self.jReaderManager.jReaderModel.jReaderTextString = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:chapterModel.chapterId] encoding:NSUTF8StringEncoding error:nil];
+    // 先设置章节内容，才能搜索到书签所在页面
+    self.jReaderManager.jReaderPageIndex = [self.jReaderManager jReaderPageIndexWith:markModel.markContent];
+    [self.bottomMenuView setProgress:self.jReaderManager.jReaderPageIndex / (self.jReaderManager.jReaderPageCount * 1.0)];
+}
 #pragma mark - JReaderManagerDelegate
 - (void)jReaderManager:(nullable JReaderManager *)jReaderManager {
     self.jReaderManager.view.userInteractionEnabled = NO;
@@ -425,15 +480,15 @@
 }
 
 #pragma mark - get/set
-- (TapMenuView *)tapMenuView {
-    if (!_tapMenuView) {
-        _tapMenuView = [[TapMenuView alloc] init];
+- (TopMenuView *)topMenuView {
+    if (!_topMenuView) {
+        _topMenuView = [[TopMenuView alloc] init];
         __weak typeof(self) weakSelf = self;
-        _tapMenuView.backButtonBlock = ^(id parameter) {
-            [weakSelf.navigationController popViewControllerAnimated:YES];
+        _topMenuView.backButtonBlock = ^(id parameter) {
+            [weakSelf topMenuViewButtonClick:[parameter integerValue]];
         };
     }
-    return _tapMenuView;
+    return _topMenuView;
 }
 - (BottomMenuView *)bottomMenuView {
     if (!_bottomMenuView) {
@@ -477,8 +532,11 @@
         _readerDirectoryViewController.cancelClickBlock = ^(id parameter) {
             [weakSelf cancelDirectoryView];
         };
-        _readerDirectoryViewController.cellClickBlock = ^(id parameter) {
+        _readerDirectoryViewController.chapterCellClickBlock = ^(id parameter) {
             [weakSelf jumpChapter:[parameter integerValue]];
+        };
+        _readerDirectoryViewController.markCellClickBlock = ^(id parameter) {
+            [weakSelf jumpMark:[parameter integerValue]];
         };
     }
     return _readerDirectoryViewController;

@@ -49,8 +49,10 @@
 		C47693231F6FB88400D5867A /* jReaderPageFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C47693221F6FB88400D5867A /* jReaderPageFooterView.m */; };
 		C47693251F6FC02100D5867A /* battery.png in Resources */ = {isa = PBXBuildFile; fileRef = C47693241F6FC02100D5867A /* battery.png */; };
 		C476932C1F6FD2F500D5867A /* ReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C47693291F6FD2F500D5867A /* ReaderViewController.m */; };
-		C476932F1F6FD31F00D5867A /* TapMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = C476932E1F6FD31F00D5867A /* TapMenuView.m */; };
+		C476932F1F6FD31F00D5867A /* TopMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = C476932E1F6FD31F00D5867A /* TopMenuView.m */; };
 		C47693321F6FDB7000D5867A /* BottomMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = C47693311F6FDB7000D5867A /* BottomMenuView.m */; };
+		C47CBB7A1F7B407500CCFC4E /* MarkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C47CBB791F7B407500CCFC4E /* MarkModel.m */; };
+		C47CBB7D1F7B4CB400CCFC4E /* MarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C47CBB7C1F7B4CB400CCFC4E /* MarkTableViewCell.m */; };
 		C4B61A4E1F7A50E200793CA4 /* ReaderDirectoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4B61A4D1F7A50E200793CA4 /* ReaderDirectoryViewController.m */; };
 		C4BA6E8E1F3015C20064D06D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA6E8D1F3015C20064D06D /* main.m */; };
 		C4BA6E911F3015C20064D06D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BA6E901F3015C20064D06D /* AppDelegate.m */; };
@@ -147,10 +149,14 @@
 		C47693241F6FC02100D5867A /* battery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = battery.png; sourceTree = "<group>"; };
 		C47693281F6FD2F500D5867A /* ReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderViewController.h; sourceTree = "<group>"; };
 		C47693291F6FD2F500D5867A /* ReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderViewController.m; sourceTree = "<group>"; };
-		C476932D1F6FD31F00D5867A /* TapMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapMenuView.h; sourceTree = "<group>"; };
-		C476932E1F6FD31F00D5867A /* TapMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapMenuView.m; sourceTree = "<group>"; };
+		C476932D1F6FD31F00D5867A /* TopMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopMenuView.h; sourceTree = "<group>"; };
+		C476932E1F6FD31F00D5867A /* TopMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopMenuView.m; sourceTree = "<group>"; };
 		C47693301F6FDB7000D5867A /* BottomMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomMenuView.h; sourceTree = "<group>"; };
 		C47693311F6FDB7000D5867A /* BottomMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomMenuView.m; sourceTree = "<group>"; };
+		C47CBB781F7B407500CCFC4E /* MarkModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarkModel.h; sourceTree = "<group>"; };
+		C47CBB791F7B407500CCFC4E /* MarkModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarkModel.m; sourceTree = "<group>"; };
+		C47CBB7B1F7B4CB400CCFC4E /* MarkTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarkTableViewCell.h; sourceTree = "<group>"; };
+		C47CBB7C1F7B4CB400CCFC4E /* MarkTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarkTableViewCell.m; sourceTree = "<group>"; };
 		C4B61A4C1F7A50E200793CA4 /* ReaderDirectoryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReaderDirectoryViewController.h; sourceTree = "<group>"; };
 		C4B61A4D1F7A50E200793CA4 /* ReaderDirectoryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReaderDirectoryViewController.m; sourceTree = "<group>"; };
 		C4BA6E891F3015C20064D06D /* JReaderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JReaderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -298,6 +304,8 @@
 				C43FEBE81F73C704008E3629 /* ReaderModel.m */,
 				C43FEBEA1F73C73A008E3629 /* ChapterModel.h */,
 				C43FEBEB1F73C73A008E3629 /* ChapterModel.m */,
+				C47CBB781F7B407500CCFC4E /* MarkModel.h */,
+				C47CBB791F7B407500CCFC4E /* MarkModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -354,12 +362,14 @@
 		C476932B1F6FD2F500D5867A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C476932D1F6FD31F00D5867A /* TapMenuView.h */,
-				C476932E1F6FD31F00D5867A /* TapMenuView.m */,
+				C476932D1F6FD31F00D5867A /* TopMenuView.h */,
+				C476932E1F6FD31F00D5867A /* TopMenuView.m */,
 				C47693301F6FDB7000D5867A /* BottomMenuView.h */,
 				C47693311F6FDB7000D5867A /* BottomMenuView.m */,
 				C4CF92BE1F78AA2F00AA141C /* SetMenuView.h */,
 				C4CF92BF1F78AA2F00AA141C /* SetMenuView.m */,
+				C47CBB7B1F7B4CB400CCFC4E /* MarkTableViewCell.h */,
+				C47CBB7C1F7B4CB400CCFC4E /* MarkTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -673,6 +683,7 @@
 				C47693321F6FDB7000D5867A /* BottomMenuView.m in Sources */,
 				C4BB41A11F5930860052F10C /* WDViewLayout.m in Sources */,
 				C4BB419E1F5930860052F10C /* UITableView+WDAutoLayout.m in Sources */,
+				C47CBB7A1F7B407500CCFC4E /* MarkModel.m in Sources */,
 				C4BA6E911F3015C20064D06D /* AppDelegate.m in Sources */,
 				C4BA6E8E1F3015C20064D06D /* main.m in Sources */,
 				C4B61A4E1F7A50E200793CA4 /* ReaderDirectoryViewController.m in Sources */,
@@ -682,7 +693,8 @@
 				C424DBB81F5D533C0092370C /* JReaderManager.m in Sources */,
 				C4BB419F1F5930860052F10C /* UIView+WDAutoLayout.m in Sources */,
 				C4CF92C01F78AA2F00AA141C /* SetMenuView.m in Sources */,
-				C476932F1F6FD31F00D5867A /* TapMenuView.m in Sources */,
+				C476932F1F6FD31F00D5867A /* TopMenuView.m in Sources */,
+				C47CBB7D1F7B4CB400CCFC4E /* MarkTableViewCell.m in Sources */,
 				C424DBBD1F5D533C0092370C /* JReaderViewController.m in Sources */,
 				C43FEBE91F73C704008E3629 /* ReaderModel.m in Sources */,
 				C424DBB91F5D533C0092370C /* JReaderModel.m in Sources */,

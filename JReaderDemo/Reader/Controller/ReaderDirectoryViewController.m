@@ -8,14 +8,18 @@
 
 #import "ReaderDirectoryViewController.h"
 #import "ChapterModel.h"
+#import "MarkModel.h"
+#import "MarkTableViewCell.h"
 
 @interface ReaderDirectoryViewController () <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UISegmentedControl *segment;
 @property (nonatomic, strong) UIView *lineView;
+@property (nonatomic, strong) UITableView *currentTableView;
 @property (nonatomic, strong) UITableView *directoryTableView;
+@property (nonatomic, strong) UITableView *markTableView;
 @property (nonatomic, strong) NSMutableArray<ChapterModel *> *chapterArr;
-
+@property (nonatomic, strong) NSMutableArray<MarkModel *> *markArr;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 
 @end
@@ -39,13 +43,6 @@
     .leftEqualToView(self.segment)
     .rightEqualToView(self.segment)
     .height(0.5);
-    
-    [self.view addSubview:self.directoryTableView];
-    self.directoryTableView.wd_layout
-    .topSpaceToView(self.lineView, 0)
-    .leftEqualToSuperView()
-    .bottomEqualToSuperView()
-    .rightSpaceToSuperView(60);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,10 +50,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)refreshView:(NSMutableArray *)chapterArr {
+- (void)refreshView:(NSMutableArray *)chapterArr markArr:(NSMutableArray *)markArr {
     self.segment.selectedSegmentIndex = 0;
     self.chapterArr = chapterArr;
-    [self.directoryTableView reloadData];
+    self.markArr = markArr;
+
+    [self segmentedControlClick:self.segment];
 }
 
 - (void)tapGestureRecognizerClick: (UITapGestureRecognizer *)tap {
@@ -64,6 +63,42 @@
         self.cancelClickBlock(self);
     }
 }
+
+- (void)segmentedControlClick: (UISegmentedControl *)segment {
+    switch (segment.selectedSegmentIndex) {
+        case 0:
+            if (self.currentTableView != self.directoryTableView) {
+                [self.currentTableView removeFromSuperview];
+                [self.view addSubview:self.directoryTableView];
+                self.directoryTableView.wd_layout
+                .topSpaceToView(self.lineView, 0)
+                .leftEqualToSuperView()
+                .bottomEqualToSuperView()
+                .rightSpaceToSuperView(60);
+                [self.directoryTableView reloadData];
+                self.currentTableView = self.directoryTableView;
+            }
+            break;
+        case 1:
+            break;
+        case 2:
+            if (self.currentTableView != self.markTableView) {
+                [self.currentTableView removeFromSuperview];
+                [self.view addSubview:self.markTableView];
+                self.markTableView.wd_layout
+                .topSpaceToView(self.lineView, 0)
+                .leftEqualToSuperView()
+                .bottomEqualToSuperView()
+                .rightSpaceToSuperView(60);
+                [self.markTableView reloadData];
+                self.currentTableView = self.markTableView;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     CGPoint point = [touch locationInView:self.view];
@@ -76,20 +111,44 @@
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.chapterArr.count;
+    if (tableView == self.directoryTableView) {
+        return self.chapterArr.count;
+    }
+    if (tableView == self.markTableView) {
+        return self.markArr.count;
+    }
+    return 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chapterCell"];
-    if (cell==nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"chapterCell"];
+    if (tableView == self.directoryTableView) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chapterCell"];
+        if (cell==nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"chapterCell"];
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.text = self.chapterArr[indexPath.row].chapterName;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    } else if (tableView == self.markTableView) {
+        MarkTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"markCell"];
+        if (cell==nil) {
+            cell = [[MarkTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"markCell"];
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        cell.markModel = self.markArr[indexPath.row];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    } else {
+        return [[UITableViewCell alloc] init];
     }
-    cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.text = self.chapterArr[indexPath.row].chapterName;
-    return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.cellClickBlock) {
-        self.cellClickBlock(@(indexPath.row));
+    
+    if (tableView == self.directoryTableView && self.chapterCellClickBlock) {
+        self.chapterCellClickBlock(@(indexPath.row));
+    }
+    if (tableView == self.markTableView && self.markCellClickBlock) {
+        self.markCellClickBlock(@(indexPath.row));
     }
 }
 
@@ -103,11 +162,22 @@
     }
     return _directoryTableView;
 }
+- (UITableView *)markTableView {
+    if (!_markTableView) {
+        _markTableView = [[UITableView alloc] init];
+        _markTableView.backgroundColor = [UIColor whiteColor];
+        _markTableView.rowHeight = 100;
+        _markTableView.delegate = self;
+        _markTableView.dataSource = self;
+    }
+    return _markTableView;
+}
 - (UISegmentedControl *)segment {
     if (!_segment) {
         NSArray *array = [NSArray arrayWithObjects:@"目录",@"想法",@"书签", nil];
         _segment = [[UISegmentedControl alloc]initWithItems:array];
         _segment.backgroundColor = [UIColor whiteColor];
+        [_segment addTarget:self action:@selector(segmentedControlClick:) forControlEvents:UIControlEventValueChanged];
     }
     return _segment;
 }

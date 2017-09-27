@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "ChapterModel.h"
+#import "MarkModel.h"
 
 @interface ReaderModel : NSObject
 
 @property (nonatomic, strong) NSString *bookName;
 @property (nonatomic, strong) NSMutableArray<ChapterModel *> * bookChapterArr;
+@property (nonatomic, strong) NSMutableArray <MarkModel *> *bookMarkArr;
 
 @end
