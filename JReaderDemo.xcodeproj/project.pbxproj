@@ -65,7 +65,6 @@
 		C4BB419F1F5930860052F10C /* UIView+WDAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BB41981F5930860052F10C /* UIView+WDAutoLayout.m */; };
 		C4BB41A01F5930860052F10C /* WDLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BB419B1F5930860052F10C /* WDLayoutConstraint.m */; };
 		C4BB41A11F5930860052F10C /* WDViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BB419D1F5930860052F10C /* WDViewLayout.m */; };
-		C4BB41AE1F597A620052F10C /* text in Resources */ = {isa = PBXBuildFile; fileRef = C4BB41AD1F597A620052F10C /* text */; };
 		C4CF92C01F78AA2F00AA141C /* SetMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CF92BF1F78AA2F00AA141C /* SetMenuView.m */; };
 /* End PBXBuildFile section */
 
@@ -184,7 +183,6 @@
 		C4BB419C1F5930860052F10C /* WDViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WDViewLayout.h; sourceTree = "<group>"; };
 		C4BB419D1F5930860052F10C /* WDViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WDViewLayout.m; sourceTree = "<group>"; };
 		C4BB41A21F5930C80052F10C /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		C4BB41AD1F597A620052F10C /* text */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = text; sourceTree = "<group>"; };
 		C4CF92BE1F78AA2F00AA141C /* SetMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetMenuView.h; sourceTree = "<group>"; };
 		C4CF92BF1F78AA2F00AA141C /* SetMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetMenuView.m; sourceTree = "<group>"; };
 		D575E0BDF0ADA5EDF35A5F4C /* Pods-JReaderDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JReaderDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JReaderDemo/Pods-JReaderDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -400,7 +398,6 @@
 			isa = PBXGroup;
 			children = (
 				C43FEBED1F73C84B008E3629 /* Resource */,
-				C4BB41AD1F597A620052F10C /* text */,
 				C47693261F6FD2F500D5867A /* Reader */,
 				C424DBA21F5D533C0092370C /* JReader */,
 				C4BB41941F5930860052F10C /* WDAutoLayout */,
@@ -576,7 +573,6 @@
 				C43FEC151F73C84B008E3629 /* 62465 in Resources */,
 				C47693251F6FC02100D5867A /* battery.png in Resources */,
 				C43FEC121F73C84B008E3629 /* 62462 in Resources */,
-				C4BB41AE1F597A620052F10C /* text in Resources */,
 				C43FEC041F73C84B008E3629 /* 62448 in Resources */,
 				C43FEC081F73C84B008E3629 /* 62452 in Resources */,
 				C43FEC111F73C84B008E3629 /* 62461 in Resources */,

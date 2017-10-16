@@ -102,7 +102,7 @@
 }
 #pragma mark 开始拖动
 - (void)panGesBegan:(CGFloat)pointX {
-    if (pointX >= 0) {
+    if (pointX > 0) {
         self.panGesRecMax = -999;
         self.isLeftPan = NO;
         if ([self.dataSource respondsToSelector:@selector(jReaderBaseAnimationViewController:viewControllerBeforeViewController:)]) {

@@ -33,6 +33,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.userInteractionEnabled = YES;
     [self addChildViewController:self.jReaderAnimationViewController];
     [self.view addSubview:self.jReaderAnimationViewController.view];
     self.jReaderAnimationViewController.view.frame = CGRectMake(0, 0, JREADER_SCREEN_WIDTH, JREADER_SCREEN_HEIGHT);
@@ -91,7 +92,8 @@
         return;
     }
     if ([keyPath isEqualToString:@"jReaderTextString"]) {
-        [self reloadJReaderAnimationViewController];
+        _jReaderPageIndex = 0;
+        [self jReaderManagerReload];
         return;
     }
     if ([keyPath isEqualToString:@"jReaderPageIndex"]) {
@@ -104,7 +106,7 @@
 #pragma mark 从新加载数据
 - (void)jReaderManagerReload {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadJReaderAnimationViewController) object:nil];
-    [self performSelector:@selector(reloadJReaderAnimationViewController) withObject:nil afterDelay:0];
+    [self performSelector:@selector(reloadJReaderAnimationViewController) withObject:nil afterDelay:0.1];
 }
 #pragma mark 刷新翻页控制器
 - (void)reloadJReaderAnimationViewController {
@@ -208,4 +210,8 @@
 - (id)userDefinedProperty {
     return self.jReaderAnimationViewController.userDefinedProperty;
 }
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled {
+    self.jReaderAnimationViewController.userInteractionEnabled = userInteractionEnabled;
+}
+
 @end

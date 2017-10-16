@@ -16,6 +16,7 @@
 
 @property (nonatomic, weak, nullable) id<JReaderAnimationViewControllerDelegate> delegate;
 @property (nonatomic, weak, nullable) id<JReaderAnimationViewControllerDataSource>dataSource;
+@property (nonatomic, assign) BOOL userInteractionEnabled;
 
 /**
  预留自定义字段  可以用来存储 章节索引，防止章节混乱

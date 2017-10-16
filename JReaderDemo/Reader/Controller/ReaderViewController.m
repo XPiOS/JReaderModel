@@ -67,7 +67,6 @@
 
 #pragma mark - 初始化页面
 - (void)initView {
-    
     self.chapterIndex = 0;
     
     self.fontSize = 14;
@@ -249,6 +248,7 @@
             break;
         }
         case 3: {
+            self.jReaderManager.userInteractionEnabled = NO;
             // 去目录
             [self hiddnMenuView:nil];
             [self.view addSubview:self.readerDirectoryViewController.view];
@@ -397,6 +397,7 @@
         self.readerDirectoryViewController.view.backgroundColor = [UIColor clearColor];
         self.readerDirectoryViewController.view.frame = CGRectMake(-SCREEN_WIDTH + 60, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     } completion:^(BOOL finished) {
+        self.jReaderManager.userInteractionEnabled = YES;
         [self.readerDirectoryViewController.view removeFromSuperview];
         [self.readerDirectoryViewController removeFromParentViewController];
     }];
@@ -425,11 +426,11 @@
 }
 #pragma mark - JReaderManagerDelegate
 - (void)jReaderManager:(nullable JReaderManager *)jReaderManager {
-    self.jReaderManager.view.userInteractionEnabled = NO;
+    self.jReaderManager.userInteractionEnabled = NO;
     [self hiddnMenuView:nil];
 }
 - (void)jReaderManager:(nullable JReaderManager *)jReaderManager didFinishAnimating:(BOOL)finished transitionCompleted:(BOOL)completed {
-    self.jReaderManager.view.userInteractionEnabled = YES;
+    self.jReaderManager.userInteractionEnabled = YES;
 }
 - (BOOL)jReaderManager:(JReaderManager *)jReaderManager tapGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer {
     CGPoint point = [tapGestureRecognizer locationInView:self.view];

@@ -33,6 +33,15 @@
 }
 
 #pragma mark - 父类方法
+- (void)panGesBegan:(CGFloat)pointX {
+    
+}
+- (void)panGesEnded:(CGFloat)pointX {
+    
+}
+- (void)panGesChanged:(CGFloat)pointX {
+    
+}
 - (void)jumpViewController:(UIViewController *)viewController {
     self.currentViewController = viewController;
     JReaderViewController *readerVC1 = (JReaderViewController *)self.currentViewController;

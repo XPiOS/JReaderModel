@@ -101,7 +101,7 @@
     }
 }
 #pragma mark 创建阅读页面控制器
-- (UIViewController *)createReaderViewController: (NSUInteger)pageIndex {
+- (JReaderViewController *)createReaderViewController: (NSUInteger)pageIndex {
     JReaderViewController *jReaderViewController = [[JReaderViewController alloc] init];
     jReaderViewController.jReaderContentStr = [self.jReaderPaging stringOfPage:pageIndex];
     jReaderViewController.jReaderFrame = self.jReaderModel.jReaderFrame;
@@ -168,6 +168,9 @@
 #pragma mark - JReaderAnimationViewControllerDataSource
 #pragma mark 获取上一页控制器
 - (nullable UIViewController *)jReaderBaseAnimationViewController:(nullable JReaderBaseAnimationViewController *)jReaderBaseAnimationViewController viewControllerBeforeViewController:(nullable UIViewController *)viewController {
+    if (!self.userInteractionEnabled) {
+        return nil;
+    }
     JReaderViewController *jReaderViewController = (JReaderViewController *)viewController;
     
     if (self.userDefinedProperty != jReaderViewController.userDefinedProperty) {
@@ -210,7 +213,13 @@
 
 #pragma mark 获取下一页控制器
 - (nullable UIViewController *)jReaderBaseAnimationViewController:(nullable JReaderBaseAnimationViewController *)jReaderBaseAnimationViewController viewControllerAfterViewController:(nullable UIViewController *)viewController {
+    if (!self.userInteractionEnabled) {
+        return nil;
+    }
     JReaderViewController *jReaderViewController = (JReaderViewController *)viewController;
+    
+    NSLog(@"翻页前 页码  %zd", jReaderViewController.jReaderPageIndex);
+    
     if (self.userDefinedProperty != jReaderViewController.userDefinedProperty) {
         if ([self.dataSource respondsToSelector:@selector(appointContent:userDefinedProperty:)]) {
             NSString *textStr = [self.dataSource appointContent:self userDefinedProperty: jReaderViewController.userDefinedProperty];
@@ -244,7 +253,8 @@
             return nil;
         }
     } else {
-        return [self createReaderViewController:self.jReaderPageIndex];
+        JReaderViewController *newJReaderViewController = [self createReaderViewController:self.jReaderPageIndex];
+        return newJReaderViewController;
     }
 }
 #pragma mark - get/set
@@ -263,5 +273,9 @@
 }
 - (NSInteger)jReaderPageCount {
     return self.jReaderPaging.pageCount;
+}
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled {
+    _userInteractionEnabled = userInteractionEnabled;
+    self.jReaderBaseAnimationViewController.view.userInteractionEnabled = userInteractionEnabled;
 }
 @end

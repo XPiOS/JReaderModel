@@ -16,6 +16,7 @@
 
 @property (nonatomic, weak, nullable) id <JReaderManagerDataSource> dataSource;
 @property (nonatomic, weak, nullable) id <JReaderManagerDelegate> delegate;
+@property (nonatomic, assign) BOOL userInteractionEnabled;
 
 /**
  阅读相关数据
