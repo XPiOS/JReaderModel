@@ -1,0 +1,29 @@
+//
+//  PrefixHeader.pch
+//  JReader
+//
+//  Created by Jerry on 2017/10/19.
+//  Copyright © 2017年 Jerry. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#ifdef __OBJC__
+
+#import "WDAutoLayout.h"
+#import "MJExtension.h"
+#import "UIColor+ColorChange.h"
+#import "Tools.h"
+#import "Macro.h"
+
+#endif
+
+// 屏幕宽高
+#define SCREEN_WIDTH  ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+// 动画时间
+#define kAnimateTime 0.3
+
+
+#endif /* PrefixHeader_pch */
